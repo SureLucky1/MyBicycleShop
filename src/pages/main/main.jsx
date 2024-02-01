@@ -20,13 +20,16 @@ const Main = () => {
         <section className='bigScreen'>
             <div className='bigScreen-wrapper'>
                             <div className='left'>
+                                <div>
                 <h1>全部商品</h1>
+                </div>
+                <div>
                 <select>
             <option value="asdf">戶外運動 Outdoor</option>
             <option value="asdf">電動可移動工具 Electric Mobility</option>
             <option value="asdf">人力滑板車, 單車 Manual Bicycle</option>
             <option value="asdf">配件類 Accessories</option>
-          </select>
+          </select></div>
             </div>
 
 
@@ -77,15 +80,17 @@ onClick={showSidebar}
 </div>
 
 <div className='productGroup'>
-<div className='product-container'>
-{allProducts.map((item)=>{
-    <div key={item.id} className='product'>
-        <img src={item.img1} />
-        <p>{item.des}</p>
-        <span>HKD {item.price}</span>
-    </div>
-})
-    }</div>
+{allProducts.map((item) => {
+    return (
+        <div key={item.id} className='product'>
+            <img src={item.img1} />
+            <h6>{item.title}</h6>
+            <p>{item.des}</p>
+            <span>HKD ${item.price}</span>
+        </div>
+    );
+})}
+
 </div>
 
         </section>

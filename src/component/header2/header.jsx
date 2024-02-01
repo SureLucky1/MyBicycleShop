@@ -1,5 +1,6 @@
 import React from 'react'
 import "./header.css"
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const LowerHeader = () => {
     
     // const showSidebarLeft = () => {
@@ -29,10 +30,23 @@ const LowerHeader = () => {
         <span  class="material-symbols-outlined left">
 close
 </span></li>
-    <li className="" id=""><a href="">合法化, 歡迎分銷</a></li>
-    <li className="" id=""><a href="">主頁</a></li>
+    <li className="" id=""><Link
+    className='link-item'
+                    to="legalization"
+                    style={{ textDecoration: "none", color: "#fff" }}
+                  >合法化, 歡迎分銷</Link></li>
+    <li className="" id=""><Link
+    className='link-item'
+                    to="/"
+                    style={{ textDecoration: "none", color: "#fff" }}
+                  >主頁 Home</Link></li>
 <li className="" id=""><a href="">全部產品</a></li>
-    <li className="" id=""><a href="">關於我們</a></li>
+    <li className="" id="">                  
+    <Link
+    className='link-item'
+                    to="about-us/"
+                    style={{ textDecoration: "none", color: "#fff" }}
+                  >關於我們</Link> </li>
     <li className="" id=""><a href="">保養</a></li>
     <li className="" id=""><a href="">私隱, 退款政策</a></li>
     <li className="" id=""><a href="">Legalization, Distribution</a></li>
@@ -44,12 +58,28 @@ close
 <h1>Shop</h1>
 </div>
     <ul>
-    <li className="hideOnMobile" id=""><a href="">合法化, 歡迎分銷</a></li>
-    <li className="hideOnMobile" id=""><a href="">主頁 Home</a></li>
-<li className="hideOnMobile" id=""><a href="">全部產品 Products</a></li>
-    <li className="hideOnMobile" id=""><a href="">關於我們 About Us</a></li>
+    <li className="hideOnMobile" id=""><Link
+    className='link-item'
+                    to="legalization"
+                    style={{ textDecoration: "none", color: "#fff" }}
+                  >合法化, 歡迎分銷</Link></li>
+    <li className="hideOnMobile" id=""><Link
+    className='link-item'
+                    to="/"
+                  >主頁 Home</Link></li>
+<li className="hideOnMobile" id=""><Link
+    className='link-item'
+                    to="product/"
+                  >全部產品 Products</Link></li>
+    <li className="hideOnMobile" id=""><Link
+    className='link-item'
+                    to="about-us/"
+                  >關於我們</Link></li>
     <li className="hideOnMobile" id=""><a href="">保養 Maintenance</a></li>
-    <li className="hideOnMobile" id=""><a href="">私隱, 退款政策 Privacy, Refund</a></li>
+    <li className="hideOnMobile" id=""><Link
+    className='link-item'
+                    to="privacy"
+                  >私隱, 退款政策 Privacy, Refund</Link></li>
     <li className="hideOnMobile" id=""><a href="">Legalization, Distribution</a></li>
     </ul>
 </ul>

@@ -3,8 +3,12 @@ import UpperHeader from './component/header1/header.jsx'
 import LowerHeader from './component/header2/header.jsx'
 import React, { useEffect, useState } from 'react'
 import Main from './pages/main/main';
+import AboutUs from './pages/Abous/abousUs.jsx';
+import Privacy from './pages/Privacy/privacy.jsx';
+import Legalization from './pages/legalization and distribution/legalization.jsx';
+import Productlist from './pages/Products/productlist.jsx';
 import ShowContext from './index.js';
-
+import { Routes, Route } from "react-router-dom";
 function App() {
   const [show, setShow] = useState("flex");
 
@@ -37,7 +41,18 @@ function App() {
         </div>
         <UpperHeader />
         <LowerHeader />
-        <Main />
+        <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="about-us/" element={<AboutUs />} />
+        <Route path="privacy/" element={<Privacy />} />
+      <Route path="legalization" element={<Legalization />} />
+       <Route path="product/" element={<Productlist />} />
+       {/*     <Route path="genres/specialitems" element={<SpecialPage />} />
+        <Route path="product/:productId" element={<ProductPage />} />
+        <Route path="shoppingcart" element={<ShoppingCartPage />} />
+        <Route path="signup" element={<SignUpPage />} /> */}
+      </Routes>
+        
       </div>
     </ShowContext.Provider>
   );

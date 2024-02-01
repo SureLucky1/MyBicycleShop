@@ -23,7 +23,7 @@
   height: 50px;
 }
 
-.nav2 a {
+.nav2 li .link-item {
   height: 100%;
   padding: 0 30px;
   text-decoration: none;
@@ -32,8 +32,9 @@
   color: rgb(250, 213, 213);
 }
 
-.nav2 a:hover {
+.nav2 li .link-item:hover {
   background-color: #fff;
+  color: #000;
 }
 
 
