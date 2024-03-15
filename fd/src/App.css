@@ -18,3 +18,19 @@
     background-color: #fff;
 
 }
+
+@media(max-width: 400px) {
+    .leftSidebar {
+        padding-top: 20px;
+        margin-top: 60px;
+    }
+
+    .leftSidebar h1 {
+        font-size: 20px;
+
+    }
+
+    .leftSidebar select option {
+        font-size: 20px;
+    }
+}

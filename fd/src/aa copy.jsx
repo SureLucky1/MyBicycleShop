@@ -1,5 +1,5 @@
 import './App.css'
-import {useDispatch } from "react-redux";
+import {useDispatch, useSelector } from "react-redux";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import UpperHeader from './component/header1/header.jsx'
 import LowerHeader from './component/header2/header.jsx'
@@ -19,21 +19,38 @@ import ProfilePage from "./pages/userProfile/Profile.jsx"
 import Order from './pages/myOrder/Order.jsx';
 import ResetPassword from "./pages/userProfile/ResetPassword.jsx"
 import ShowContext from './index.js';
+import ProductPage from './pages/Products/product-page/productPage.jsx';
 import { allProducts } from './data.jsx';
 import Checkout from './pages/checkout/checkout copy.jsx';
 import { addToCart } from './component/payment/Redux/cartSlice copy.jsx';
 import { addPrice } from './component/payment/Redux/priceSlice.jsx';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faMagnifyingGlass, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 function App() {
+  const cartitems = useSelector(state => state.cart.cartItems);
+  console.log(cartitems)
+  const [index, setIndex] = useState(0)
+
+  const [qty, setQty] = useState(0);
+
+//   useEffect(()=>{
+//     cartitems.map((item, i)=>{
+//           if(item[i].cartQuantity === 0){
+// setQty(0)
+//     }else{
+//         setQty(item[i].cartQuantity)
+//     }
+//     })
+
+// } , [cartitems])
   const [login, setLogin] = useState(false);
   const [chooseRecord, setChooseRecord] = useState([])
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [selectedPrice, setSelectedPrice] = useState({price:{ min: 0, max: 10000 }});
-  const [selectedCategory, setSelectedCategory] = useState("Electric Mobility");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortedProducts, setSortedProducts] = useState(null);
   const dispatch = useDispatch()
   const [query, setQuery] = useState("");
@@ -84,16 +101,17 @@ setSelectedCategory(event.target.value);
 
     return filteredProducts.map((item, i) => {
       return (
-        <div key={i} className='product'>
-          <img src={item.img1} />
+        <div key={i} className='product' onClick={()=>{setIndex(item.id)}}>
+          <Link to="/productInfo" style={{ textDecoration: "none" }}><img src={item.img1} />
           <h6>{item.title}</h6>
-          <span>HKD ${item.price}</span>
+          <span>HKD ${item.price}</span></Link>
           <button className="btn btn-warning" onClick={() => {
             //setName(item.title);
             //setPrice(item.price);
             //setQuantity(item.cartQuantity);
             dispatch(addToCart({id: item.id, title: item.title, image: item.img1, price:item.price}));
             dispatch(addPrice(item.price));
+            //setQty(cartitems[i].cartQuantity);
           }}>Add to cart</button>
         </div>
       );
@@ -160,7 +178,7 @@ setSelectedCategory(event.target.value);
   }
 
   return (
-    <ShowContext.Provider value={{login, setLogin, chooseRecord, setChooseRecord, name, setName, price, setPrice, quantity, setQuantity, sortedProducts, setSortedProducts, setSelectedPrice, show, setShow, query, setQuery, selectedCategory, setSelectedCategory}}>
+    <ShowContext.Provider value={{qty, setQty, index, login, setLogin, chooseRecord, setChooseRecord, name, setName, price, setPrice, quantity, setQuantity, sortedProducts, setSortedProducts, setSelectedPrice, show, setShow, query, setQuery, selectedCategory, setSelectedCategory}}>
       <div className="App">
         <div onMouseLeave={hideSidebar} onMouseEnter={showSidebar} className='leftSidebar'>
           <h1><strong>商品分類</strong></h1>
@@ -189,6 +207,7 @@ setSelectedCategory(event.target.value);
       <Route path="profile/" element={<ProfilePage />} />
       <Route path="/profile/update" element={<UpdateProfile />} />
       <Route path="/reset-password/:useremail/:token" element={<ResetPassword />} />
+      <Route path="/productInfo" element={<ProductPage result={allProducts} />} />
       </Routes>
         <Footer />
       </div>

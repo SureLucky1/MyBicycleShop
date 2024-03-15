@@ -9,13 +9,16 @@ import ShowContext from '../../index';
 import {createOrder} from "../../actions/orderAction"
 import {Link, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Modal from './Modal/Modal2'  
 import './checkout.css'
 const Checkout = () => {
     const cartitems = useSelector(state => state.cart.cartItems);
-    const {price, quantity, setQuantity, chooseRecord, setChooseRecord} = useContext(ShowContext)
-    const [name, setName] = useState("");
+    const [display, setDisplay] = useState("flex");
+    const [index, setIndex] = useState(50);
+    const [showModal, setShowModal] = useState(false);
+    const [overflow, setOverflow] = useState('none');
     const navigate = useNavigate();
-
+    const {setQty, qty} = useContext(ShowContext);
     console.log(cartitems)
     const Total = useSelector(state => state.price.total);
     const dispatch = useDispatch();
@@ -34,8 +37,7 @@ const Checkout = () => {
         dispatch(subtractPrice(item.price));
     };
 
-    const handleSubmit = (e) => {
-
+    const handleSubmit = (e) => {   
         e.preventDefault();
         //const user = localStorage.getItem('loggedIn') === true;  // 讀取並轉換 loggedIn
 const useremail = localStorage.getItem('useremail');  // 讀取 useremail
@@ -43,46 +45,8 @@ const useremail = localStorage.getItem('useremail');  // 讀取 useremail
             navigate("/login/");  // 如果沒有用戶登入，則導航到登入頁面
             return;  // 結束 handleSubmit 函數
         }else{
-    const records = cartitems.map(item => ({
-        image: item.image,
-        name: item.title,
-        quantity: item.cartQuantity,
-        price: item.price,
-        productId: item.id,
-    }));
-    const totalPrice = cartitems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
-    const itemgroup = {
-        record: records,
-        cost: totalPrice,
-        userId: useremail,
-    };
-
-        //console.log(name, price, quantity, productId);
-        fetch("http://localhost:5000/addP", {
-          method: "POST",
-          crossDomain: true,
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify(itemgroup),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data, "userRegister");
-            if (data.status == "ok") {
-              alert("Purchase Successful");
-            } else {
-              alert("Something went wrong");
-            }
-          });
-
-
-          dispatch(clearCart());
-          dispatch(clearTotal());
+    setShowModal(true);
         }
-
     };
   
     return (
@@ -109,22 +73,22 @@ const useremail = localStorage.getItem('useremail');  // 讀取 useremail
                     <Table style={{width:"100%"}}>
                         <thead>
                             <tr>
-                                <th style={{width:"5%"}}>
+                                <th >
                                     <input type='checkbox'/>
                                 </th>
-                                <th style={{width:"10%"}}>
+                                <th>
                                     商品
                                 </th>
-                                <th style={{width:"55%"}}>
+                                <th>
                                     商品簡介
                                 </th>
-                                <th style={{width:"12%"}}>
+                                <th>
                                     數量
                                 </th>
-                                <th style={{width:"13%"}}>
+                                <th>
                                     價錢
                                 </th>
-                                <th style={{width:"5%"}}>
+                                <th>
                                     動作
                                 </th>
                             </tr>
@@ -135,20 +99,18 @@ const useremail = localStorage.getItem('useremail');  // 讀取 useremail
                                     <th><input type='checkbox'/></th>
                                     <td><img src={item.image} className="c-image" alt='' /></td>
                                     <td >{item.title}</td>
-                                    <td><Button  onClick={()=>{handledecreaseCart(item)}}>-</Button><p >{item.cartQuantity}</p><Button onClick={()=>{handleAddToCart(item)}}>+</Button></td>
+                                    <td><Button  onClick={()=>{handledecreaseCart(item);setQty(cartitems[id].cartQuantity);}}>-</Button><p >{item.cartQuantity}</p><Button onClick={()=>{handleAddToCart(item);setQty(cartitems[id].cartQuantity);}}>+</Button></td>
                                     <td style={{display:"flex", textAlign: "right"}}><p >${item.price * item.cartQuantity}</p></td>
                                     <td><button className="btn btn-warning btn-sm" onClick={() => handleRemoveFromCart(item)}>Remove</button></td>
                                 </tr>
                             ))
 }
                             <tr>
-                                <th scope="row"colspan="3">
-                                    2
+                                <th scope="row" colspan="1.5">
                                 </th>
                                 <td>
-                                    @fat
                                 </td>
-                                <td colspan="2">
+                                <td colspan="3.5">
                                     <Button onClick={handleSubmit}>前往結算</Button>
                                     <span>總金額：${Total}</span>
                                 </td>
@@ -158,6 +120,9 @@ const useremail = localStorage.getItem('useremail');  // 讀取 useremail
 
                     </Table>
                 </section>
+                <div style={{display:"flex", justifyContent:"center"}}>
+<Modal showModal={showModal}setShowModal={setShowModal} setOverflow={setOverflow} setDisplay={setDisplay} setIndex={setIndex}/>
+  </div>
             </div>
         </body>
     )

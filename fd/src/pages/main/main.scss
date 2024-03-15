@@ -331,7 +331,7 @@
 
                             img {
                                 width: 100%;
-                                height: 350px;
+                                height: auto;
                             }
 
 
@@ -511,13 +511,14 @@
                 width: 100%;
 
                 .product {
-                    img {
-                        width: 100%;
-                        height: 300px;
-                    }
-
+                    margin: 10px 0px;
                     width: 48%;
                     height: auto;
+
+                    img {
+                        width: 100%;
+                        height: auto;
+                    }
                 }
 
                 nav {
@@ -572,18 +573,33 @@
                     margin-left: 0;
 
                     div {
+                        height: auto !important;
 
                         p {
 
                             width: 100%;
                         }
 
-                        height: 150px;
                     }
                 }
             }
 
 
         }
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .body section.smallScreen .info select {
+        height: 50px;
+        font-size: 25px;
+    }
+
+    .body section.smallScreen .productGroup .product img {
+        height: auto;
+    }
+
+    select option {
+        font-size: 20px;
     }
 }

@@ -75,6 +75,7 @@
     width: 100vw;
     background-color: rgb(241, 241, 241);
     height: auto;
+    padding: 30px 0px;
   }
   .footer-wrapper .upper {
     justify-content: center;

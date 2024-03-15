@@ -245,7 +245,7 @@ function updateEmail(e) {
               align="center"
               style={{ marginTop: ".5rem" }}
             >
-              <Link to="profile/" className={classes.createAccount}>
+              <Link to="/profile/" className={classes.createAccount}>
                 Cancel
               </Link>
             </Typography>

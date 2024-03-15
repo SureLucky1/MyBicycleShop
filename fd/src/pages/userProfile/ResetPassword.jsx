@@ -153,7 +153,7 @@ console.log(useremail, token)
               align="center"
               style={{ marginTop: ".5rem" }}
             >
-              <Link to="/login" className={classes.createAccount}>
+              <Link to="/profile/" className={classes.createAccount}>
                 Cancel
               </Link>
             </Typography>

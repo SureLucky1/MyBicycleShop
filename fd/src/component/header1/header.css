@@ -226,6 +226,14 @@ nav .main .down ul li {
   list-style: none;
 }
 
+.nav1 .main .upper h1 {
+  display: none;
+  font-size: 25px;
+  width: 250%;
+  text-align: center;
+  padding-left: 17%;
+}
+
 /* .sidebar-left {
   position: fixed;
   top: 0;
@@ -389,6 +397,234 @@ nav .main .down ul li {
     height: 100%;
     position: relative;
     bottom: 10px;
+    left: 50px;
+  }
+
+  .nav1 .sidebar-right .me-1 div .dropdown-menu li:hover {
+    cursor: pointer;
+    background-color: rgb(180, 180, 180);
+  }
+
+  .nav1 .sidebar-right .me-2 div {
+    display: none;
+    height: 400px;
+    position: relative;
+    right: 235px;
+    bottom: 35px;
+    padding-right: 50px;
+  }
+
+
+  .nav1 .sidebar-right .me-2:hover div,
+  .nav1 .sidebar-right .me-1:hover div {
+    display: flex;
+    transition: 5ms;
+  }
+
+  .nav1 .sidebar-right .me-2 div .dropdown-menu {
+    display: block;
+    overflow-x: scroll !important;
+    height: 400px;
+    position: relative;
+    bottom: 10px;
+    left: 50px;
+
+  }
+
+
+
+  .nav1 .sidebar-right .me-1 div .dropdown-menu li,
+  .nav1 .sidebar-right .me-2 div .dropdown-menu li {
+    padding-top: 10px;
+  }
+
+  .nav1 .sidebar-right .me-2 div .dropdown-menu li:hover {
+    cursor: pointer;
+    background-color: rgb(180, 180, 180);
+  }
+
+
+  .nav1 .sidebar-right .me-1 span,
+  .nav1 .sidebar-right .me-2 span {
+    margin-right: 10px;
+    font-size: 23px;
+  }
+
+  .nav1 .sidebar-right .me-1,
+  .nav1 .sidebar-right .me-2 {
+    padding-left: 30px;
+    padding-top: 13px;
+  }
+
+  .nav1 .sidebar-right .me-1:hover,
+  .nav1 .sidebar-right .me-2:hover {
+    background-color: rgb(180, 180, 180);
+
+  }
+
+  .leftSidebar {
+    height: 100vh;
+    display: none;
+    position: fixed;
+    z-index: 99;
+    flex-direction: column;
+    background-color: #fff;
+  }
+
+  .nav1 {
+    background-color: white;
+  }
+
+  .nav1 .main .upper {
+    background-color: white;
+    color: black;
+    position: fixed;
+    z-index: 9;
+    top: 10px;
+    width: 80%;
+    left: 35px;
+    height: 40px;
+    font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+  }
+
+  .nav1 .main .upper h1 {
+    display: flex;
+    font-size: 28px;
+    width: 300%;
+    text-align: center;
+    padding-left: 27.5%;
+  }
+
+  .nav1 .main .upper ul li input {
+    opacity: 0;
+    width: 100%;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    height: 40px;
+  }
+
+  .nav1 .main .upper ul li:hover input {
+    opacity: 1;
+    width: 100%;
+    transition: 1.5s;
+    border: none;
+    border-radius: 0px;
+    text-decoration: underline;
+  }
+
+  select {
+    font-size: 50px;
+  }
+
+  .nav2 .sidebar-right {
+    display: none;
+    z-index: 99;
+  }
+
+  .hideOnMobile {
+    display: none;
+    font-size: 25px;
+  }
+
+  .nav1 .main .upper ul li a,
+  .nav1 .main .upper ul:first-child li:nth-child(3) {
+    display: flex;
+    height: 30px;
+  }
+
+  .nav1 .main .upper ul:first-child li:nth-child(3) span {
+    display: none;
+  }
+
+  .main .menu-button.left {
+    display: flex;
+    position: absolute;
+    left: 0;
+    margin-right: auto;
+    top: 0;
+  }
+
+  .main .menu-button.left span,
+  .main .menu-button.right span {
+    font-size: 50px;
+  }
+
+  .main .menu-button.right {
+    display: flex;
+    z-index: 99;
+    position: absolute;
+    right: -70px;
+    top: 0;
+  }
+}
+
+@media(max-width: 500px) {
+  .main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    top: 0;
+    z-index: 99;
+    background-color: #fff;
+  }
+
+
+
+  .nav1 .sidebar-right {
+    padding: 0;
+  }
+
+  .nav1 .sidebar-right li a:hover {
+    background-color: rgb(180, 180, 180);
+  }
+
+  .nav2 li .link-item {
+    height: 100%;
+    padding: 0 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: black;
+  }
+
+  .nav1 .sidebar-right li a span {
+    margin-right: 10px;
+    font-size: 23px;
+  }
+
+  /* 
+  .nav1 .sidebar-right li .me-2 button {
+    background-color: transparent !important;
+    color: black;
+    border: none;
+    width: 100%;
+    text-align: start;
+    padding-left: 22px;
+  } */
+
+
+  .nav1 .sidebar-right .me-1 div {
+    display: none;
+    height: 100px;
+    position: relative;
+    right: 235px;
+    bottom: 33px;
+    padding-right: 50px;
+  }
+
+  .nav1 .sidebar-right .me-1 div .dropdown-menu {
+    display: block;
+    overflow-x: scroll !important;
+    height: 100%;
+    position: relative;
+    bottom: 10px;
     margin-left: 13px;
   }
 
@@ -480,6 +716,14 @@ nav .main .down ul li {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
+  }
+
+  .nav1 .main .upper h1 {
+    display: flex;
+    font-size: 25px;
+    text-align: center;
+    padding-left: 16%;
   }
 
   select {
@@ -502,6 +746,10 @@ nav .main .down ul li {
     height: 30px;
   }
 
+  .nav1 .main .upper ul:first-child li:nth-child(3) span {
+    display: none;
+  }
+
   .main .menu-button.left {
     display: flex;
     position: absolute;
@@ -509,6 +757,8 @@ nav .main .down ul li {
     margin-right: auto;
     top: 0;
   }
+
+
 
   .main .menu-button.left span,
   .main .menu-button.right span {
@@ -534,8 +784,20 @@ nav .main .down ul li {
     width: auto;
   }
 
+  .nav1 .main .upper h1 {
+    display: flex;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+  }
+
   .nav1 a {
     font-size: 15px;
+  }
+
+  select {
+    font-size: 20px;
   }
 
   .sidebar-right {

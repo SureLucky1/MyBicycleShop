@@ -8,10 +8,50 @@
         .table {
             margin-top: 50px;
 
-            .c-image {
-                width: 150px;
-                height: 150px;
+            thead {
+                tr {
+                    th:nth-child(1) {
+                        width: 3%;
+                    }
+
+                    th:nth-child(2) {
+                        width: 10%;
+                    }
+
+                    th:nth-child(3) {
+                        width: 55%;
+                    }
+
+                    th:nth-child(4) {
+                        width: 12%;
+                    }
+
+                    th:nth-child(5) {
+                        width: 12%;
+                    }
+
+                    th:nth-child(6) {
+                        width: 15%;
+                    }
+                }
             }
+
+            tbody {
+                tr {
+                    td:nth-child(4) {
+                        display: flex;
+                        justify-content: space-between;
+
+                    }
+
+                    .c-image {
+                        width: 150px;
+                        height: 150px;
+                    }
+                }
+            }
+
+
         }
 
         .btn-secondary {
@@ -76,7 +116,7 @@
 
 @media only screen and (max-width:769px) {
     .checkout-wrapper {
-        padding: 0px 60px;
+        padding: 0px 20px;
 
         section {
             margin-top: 50px;
@@ -84,17 +124,57 @@
             .table {
                 margin-top: 50px;
 
+                thead {
+                    tr {
+
+                        th:nth-child(2) {
+                            width: 10%;
+                        }
+
+                        th:nth-child(3) {
+                            width: 44%;
+                        }
+
+                        th:nth-child(4) {
+                            width: 13.5%;
+                        }
+
+                        th:nth-child(5) {
+                            width: 13.5%;
+                        }
+
+                        th:nth-child(6) {
+                            width: 27%;
+                        }
+
+                    }
+                }
+
+                tbody {
+                    tr {
+                        td {
+                            .btn-secondary {
+                                position: relative;
+                                right: 0;
+                                font-size: 15px;
+                            }
+
+                            span {
+                                font-size: 15px;
+                            }
+                        }
+
+                        th {}
+                    }
+                }
+
                 .c-image {
                     width: 150px;
                     height: 150px;
                 }
             }
 
-            .btn-secondary {
-                position: relative;
-                right: 0;
 
-            }
 
 
         }

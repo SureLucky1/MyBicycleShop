@@ -271,8 +271,9 @@ close
       <FontAwesomeIcon icon={faMagnifyingGlass} />
       <input 
       onChange={handleInputChange}
-      value={query}/>搜尋</li>
+      value={query}/><span>搜尋</span></li>
     </ul>
+    <h1>眾樂樂單車店</h1>
 <ul>
     <li className="hideOnMobile" id=""><Link
     className='link-item'

@@ -23,7 +23,7 @@ const LowerHeader = () => {
     //     sidebar.style.width = '0px';
     // }
   return (
-    <nav className={["/", "/maintenance/", "/legalization", "/product/", "/about-us/", "/privacy", "/maintenanceEng/"].includes(pathname) ? 'nav2 show' : "nav2"} >
+    <nav  className='nav2' >
 <ul className='sidebar-left'>
     <li className="sidebar-left-close" onClick={hideSidebarLeft}id="">
         <span  class="material-symbols-outlined left">
@@ -66,8 +66,8 @@ close
                   >Legalization, Distribution</Link></li>
 </ul>
 
-<ul className= 'main2'>
-    <div>
+<ul className={["/", "/productInfo", "/maintenance/", "/legalization", "/product/", "/about-us/", "/privacy", "/maintenanceEng/"].includes(pathname) ? 'main2 show' : 'main2'}>
+    <div className='shopName'>
 <h1>眾樂樂單車店</h1>
 </div>
     <ul>

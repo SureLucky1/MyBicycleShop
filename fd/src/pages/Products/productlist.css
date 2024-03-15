@@ -289,7 +289,7 @@
   }
   .product .bigScreen .bigScreen-wrapper .right .productGroup .product img {
     width: 100%;
-    height: 220px;
+    height: auto;
   }
   .product .smallScreen {
     display: none;
@@ -566,7 +566,7 @@
   }
   .product section.smallScreen .productGroup .product img {
     width: 100%;
-    height: 300px;
+    height: auto;
   }
   .product section.smallScreen .productGroup nav {
     position: relative;

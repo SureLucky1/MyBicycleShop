@@ -325,7 +325,7 @@ export const carouselItems = [
   intro6: "最高時速: 32公里"
 },
   {
-    id: 4,
+    id: 14,
     img1: "https://shopage.s3.amazonaws.com/media/f858/448300798992_38446800331290606858.webp",
     img2: "https://shopage.s3.amazonaws.com/media/f858/448300798992_00754585754272918083.webp",
     sex: ["kids"],
@@ -340,7 +340,7 @@ export const carouselItems = [
     intro6: ""
   },
   {
-    id: 5,
+    id: 15,
     img1: "https://shopage.s3.amazonaws.com/media/f858/448300798992_76401720186978053713.webp",
     img2: "https://shopage.s3.amazonaws.com/media/f858/448300798992_13408448269262772839.webp",
     sex: ["kids"],
@@ -836,7 +836,7 @@ export const carouselItems = [
     ],
     "Accessories": [
         {
-          id: 4,
+          id: 14,
           img1: "https://shopage.s3.amazonaws.com/media/f858/448300798992_38446800331290606858.webp",
           img2: "https://shopage.s3.amazonaws.com/media/f858/448300798992_00754585754272918083.webp",
           sex: ["kids"],
@@ -851,7 +851,7 @@ export const carouselItems = [
           intro6: ""
         },
         {
-          id: 5,
+          id: 15,
           img1: "https://shopage.s3.amazonaws.com/media/f858/448300798992_76401720186978053713.webp",
           img2: "https://shopage.s3.amazonaws.com/media/f858/448300798992_13408448269262772839.webp",
           sex: ["kids"],

@@ -134,6 +134,10 @@
 
   }
 
+  .nav2 .main2 .shopName {
+    display: none;
+  }
+
   .nav2 li .link-item {
     color: black;
     width: 100%;
@@ -168,6 +172,22 @@
     right: 0;
     height: 100vh;
     width: 100%;
+  }
+
+  .nav2 .sidebar-left {
+    display: none;
+    z-index: 99;
+    width: 50% !important;
+    height: 55vh;
+    padding: 0;
+  }
+
+  .sidebar-left li:first-child {
+    height: 40px;
+  }
+
+  .sidebar-left li {
+    height: 30px;
   }
 
   .nav2 li .link-item {

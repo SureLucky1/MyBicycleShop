@@ -7,7 +7,7 @@ import { addPrice, subtractPrice, clearTotal } from '../../component/payment/Red
 import { Table, Button } from 'reactstrap';
 import ShowContext from '../../index';
 import {createOrder} from "../../actions/orderAction"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './checkout.css'
 const Order = () => {
@@ -24,7 +24,7 @@ console.log(chooseRecord)
     return (
         <body>
             <div className="checkout-wrapper">
-            <h4>使用者>Orders</h4>
+            <h4><Link to="/profile/" style={{textDecoration: "none", color: "black"}}>使用者</ Link>>Orders</h4>
                 <section>
                     <h1>購物記錄</h1>
                     <Table style={{width:"100%"}}>

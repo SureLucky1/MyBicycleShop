@@ -8,7 +8,29 @@
 .checkout-wrapper section .table {
   margin-top: 50px;
 }
-.checkout-wrapper section .table .c-image {
+.checkout-wrapper section .table thead tr th:nth-child(1) {
+  width: 3%;
+}
+.checkout-wrapper section .table thead tr th:nth-child(2) {
+  width: 10%;
+}
+.checkout-wrapper section .table thead tr th:nth-child(3) {
+  width: 55%;
+}
+.checkout-wrapper section .table thead tr th:nth-child(4) {
+  width: 12%;
+}
+.checkout-wrapper section .table thead tr th:nth-child(5) {
+  width: 12%;
+}
+.checkout-wrapper section .table thead tr th:nth-child(6) {
+  width: 15%;
+}
+.checkout-wrapper section .table tbody tr td:nth-child(4) {
+  display: flex;
+  justify-content: space-between;
+}
+.checkout-wrapper section .table tbody tr .c-image {
   width: 150px;
   height: 150px;
 }
@@ -56,7 +78,7 @@
 }
 @media only screen and (max-width: 769px) {
   .checkout-wrapper {
-    padding: 0px 60px;
+    padding: 0px 20px;
   }
   .checkout-wrapper section {
     margin-top: 50px;
@@ -64,13 +86,32 @@
   .checkout-wrapper section .table {
     margin-top: 50px;
   }
+  .checkout-wrapper section .table thead tr th:nth-child(2) {
+    width: 10%;
+  }
+  .checkout-wrapper section .table thead tr th:nth-child(3) {
+    width: 44%;
+  }
+  .checkout-wrapper section .table thead tr th:nth-child(4) {
+    width: 13.5%;
+  }
+  .checkout-wrapper section .table thead tr th:nth-child(5) {
+    width: 13.5%;
+  }
+  .checkout-wrapper section .table thead tr th:nth-child(6) {
+    width: 27%;
+  }
+  .checkout-wrapper section .table tbody tr td .btn-secondary {
+    position: relative;
+    right: 0;
+    font-size: 15px;
+  }
+  .checkout-wrapper section .table tbody tr td span {
+    font-size: 15px;
+  }
   .checkout-wrapper section .table .c-image {
     width: 150px;
     height: 150px;
-  }
-  .checkout-wrapper section .btn-secondary {
-    position: relative;
-    right: 0;
   }
   .checkout-wrapper .become-member {
     position: absolute;
