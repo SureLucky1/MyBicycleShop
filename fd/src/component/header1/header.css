@@ -41,7 +41,7 @@ body {
 
 .nav1 li {
   height: 100%;
-  width: 120px;
+  width: 130px;
 
 }
 
@@ -154,7 +154,7 @@ body {
   height: 100%;
 } */
 
-.nav1 .main .upper ul li input {
+.nav1 .main .upper ul li .large-input {
   width: 0;
   display: flex;
   opacity: 0;
@@ -174,7 +174,7 @@ body {
   height: 100%;
 }
 
-.nav1 .main .upper ul li:hover input {
+.nav1 .main .upper ul li:hover .large-input {
   opacity: 1;
   width: 200px;
   transition: 1.5s;
@@ -213,7 +213,7 @@ nav .main .down ul li {
   position: fixed;
   right: 0;
   top: 50px;
-  height: 350px;
+  height: 270px;
   width: 200px;
   z-index: 99;
   background-color: rgba(255, 255, 255);
@@ -347,7 +347,11 @@ nav .main .down ul li {
     background-color: #fff;
   }
 
-
+  .nav1 .sidebar-right li {
+    height: 30px;
+    width: 100%;
+    margin: 5px 0px;
+  }
 
   .nav1 .sidebar-right {
     padding: 0;
@@ -453,7 +457,6 @@ nav .main .down ul li {
   .nav1 .sidebar-right .me-1,
   .nav1 .sidebar-right .me-2 {
     padding-left: 30px;
-    padding-top: 13px;
   }
 
   .nav1 .sidebar-right .me-1:hover,
@@ -499,20 +502,30 @@ nav .main .down ul li {
     padding-left: 27.5%;
   }
 
-  .nav1 .main .upper ul li input {
+  .nav1 .main .upper h1 a {
+    display: flex;
+    font-size: 28px;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+  }
+
+  .nav1 .main .upper ul li .large-input {
     opacity: 0;
     width: 100%;
     position: fixed;
     top: 50px;
-    left: 0;
+    left: 0%;
     height: 40px;
+    z-index: -99;
   }
 
-  .nav1 .main .upper ul li:hover input {
+  .nav1 .main .upper ul li:hover .large-input {
     opacity: 1;
     width: 100%;
     transition: 1.5s;
     border: none;
+    display: none;
     border-radius: 0px;
     text-decoration: underline;
   }
@@ -547,11 +560,14 @@ nav .main .down ul li {
     left: 0;
     margin-right: auto;
     top: 0;
+
   }
 
   .main .menu-button.left span,
   .main .menu-button.right span {
     font-size: 50px;
+    cursor: pointer;
+    /*z-index: 99;*/
   }
 
   .main .menu-button.right {
@@ -560,6 +576,7 @@ nav .main .down ul li {
     position: absolute;
     right: -70px;
     top: 0;
+
   }
 }
 
@@ -579,6 +596,7 @@ nav .main .down ul li {
 
   .nav1 .sidebar-right {
     padding: 0;
+    z-index: 99;
   }
 
   .nav1 .sidebar-right li a:hover {
@@ -681,7 +699,6 @@ nav .main .down ul li {
   .nav1 .sidebar-right .me-1,
   .nav1 .sidebar-right .me-2 {
     padding-left: 30px;
-    padding-top: 13px;
   }
 
   .nav1 .sidebar-right .me-1:hover,
@@ -721,9 +738,17 @@ nav .main .down ul li {
 
   .nav1 .main .upper h1 {
     display: flex;
-    font-size: 25px;
+    font-size: 23px;
     text-align: center;
+    padding: 0;
     padding-left: 16%;
+  }
+
+  .nav1 .main .upper h1 a {
+    display: flex;
+    font-size: 23px;
+    text-align: center;
+
   }
 
   select {
@@ -784,7 +809,7 @@ nav .main .down ul li {
     width: auto;
   }
 
-  .nav1 .main .upper h1 {
+  .nav1 .main .upper h1 a {
     display: flex;
     font-size: 16px;
     width: 100%;

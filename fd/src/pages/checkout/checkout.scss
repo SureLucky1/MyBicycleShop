@@ -54,6 +54,10 @@
 
         }
 
+        .table:last-child {
+            display: none;
+        }
+
         .btn-secondary {
             position: relative;
             right: 0;
@@ -121,8 +125,9 @@
         section {
             margin-top: 50px;
 
-            .table {
+            .max {
                 margin-top: 50px;
+                display: none;
 
                 thead {
                     tr {
@@ -151,6 +156,7 @@
                 }
 
                 tbody {
+
                     tr {
                         td {
                             .btn-secondary {
@@ -162,18 +168,100 @@
                             span {
                                 font-size: 15px;
                             }
+
+                            .c-image {
+                                width: 150%;
+                                height: auto;
+                            }
                         }
 
-                        th {}
+
+
+
                     }
                 }
 
-                .c-image {
-                    width: 150px;
-                    height: 150px;
-                }
+
+
+
             }
 
+            .table:last-child {
+                display: block;
+
+                thead {
+                    tr {
+
+                        th:nth-child(2) {
+                            width: 18%;
+                        }
+
+                        th:nth-child(3) {
+                            width: 44%;
+                        }
+                    }
+                }
+
+                tbody {
+                    display: block;
+
+                    tr {
+                        width: 100%;
+
+                        td {
+
+                            div {
+                                display: flex;
+                                justify-content: flex-start;
+
+
+
+                                .img {
+                                    display: flex;
+                                    align-items: flex-start;
+                                    width: 65%;
+                                    justify-content: flex-start;
+
+                                    .c-image {
+                                        width: 100%;
+                                        height: auto;
+                                    }
+                                }
+
+                                div:last-child {
+                                    display: flex;
+                                    flex-direction: column;
+                                    margin-left: 15px;
+
+                                    p,
+                                    button {
+                                        align-self: center;
+                                    }
+
+                                    div {
+                                        margin-top: 20px;
+                                        display: flex;
+                                        flex-direction: row;
+                                        padding: 0px 10px;
+                                        justify-content: space-between;
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+
+                    tr:last-child {
+
+                        td {
+                            span {
+                                margin-left: 18px;
+                            }
+                        }
+                    }
+                }
+            }
 
 
 

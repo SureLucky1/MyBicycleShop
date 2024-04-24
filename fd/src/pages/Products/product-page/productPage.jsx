@@ -1,14 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react'
 import "./productPage.css"
 import ShowContext from '../../../index'
-import { allProducts } from '../../../data'
+import { allProducts, moneyData } from '../../../data'
 import {useDispatch, useSelector } from "react-redux";
+import { useTranslation, Trans } from 'react-i18next';
 import { addToCart,removeFromCart, decreaseCart } from '../../../component/payment/Redux/cartSlice copy'
-import { addPrice, subtractPrice } from '../../../component/payment/Redux/priceSlice'
+import { addPrice, subtractPrice, clearTotal }  from '../../../component/payment/Redux/priceSlice'
 import SliderComponent from './slider/slider'
-const ProductPage = ({result, sortAscending}) => {
+const ProductPage = ({resultCh, resultEng, resultSimpleChi, sortAscending}) => {
+    const [result, setResult] = useState(resultCh);
+    const { t, i18n } = useTranslation();
     const cartitems = useSelector(state => state.cart.cartItems);
-    const {index, qty, setQty} = useContext(ShowContext);
+    const {Lan, index, qty, setQty, moneyIndex} = useContext(ShowContext);
+    
     useEffect(()=>{
         if(cartitems.length === 0){
             setQty(0)
@@ -22,6 +26,17 @@ const ProductPage = ({result, sortAscending}) => {
         
     }
     } , [cartitems, cartitems.length])
+
+    useEffect(()=>{
+        if(Lan ==="繁體中文"){
+            setResult(resultCh);
+        }else if(Lan ==="简体中文"){
+            setResult(resultSimpleChi);
+        }else if(Lan ==="English"){
+            setResult(resultEng);
+        }
+    }, [Lan])
+    
     console.log(cartitems, index, result.All[index-1])
 const [color, setColor] = useState("")
     const handleChoice = (e)=>{
@@ -77,17 +92,17 @@ setColor(e.target.value)
             <div className='right'>
                 <h1><strong>{result.All[index-1].title}</strong></h1>
                 <div className='sellingPrice'>
-                    <span>售價</span>
-                    <h4>${result.All[index-1].price}</h4>
+                    <span>{t("cost")}</span>
+                    <h4>{moneyData[moneyIndex].symbol} {Math.ceil(result.All[index-1].price * moneyData[moneyIndex].currency)}</h4>
                 </div>
                 <div className='selectColor'>
-                    <h4>選項</h4>
+                    <h4>{t("choice")}</h4>
                     <select name="" id="" onChange={handleChoice}>
-                    <option value="black">黑色</option>
-                    <option value="white">白色</option></select>
+                    <option value="black">{t("black")}</option>
+                    <option value="white">{t("white")}</option></select>
                 </div>
                 <div className='quantity'>
-                    <h4>數量</h4>
+                    <h4>{t("qty")}</h4>
                     <div>
                     <button  onClick={()=>{handledecreaseCart(result.All[index-1]);}}>-</button>
                     {qty}
@@ -95,16 +110,16 @@ setColor(e.target.value)
                     </div>
                 </div>
 <div className='involve'>
-    <button onClick={()=>{handleAddToCart(result.All[index-1]);}}>加進購物車</button>
-    <button>直接下單</button>
+    <button onClick={()=>{handleAddToCart(result.All[index-1]);}}>{t("add")}</button>
+    <button>{t("order")}</button>
 </div>
-<button className='contact'>聯絡店主</button>
+<button className='contact'>{t("contactShop")}</button>
             </div>
         </section>
         <section className='second-Part'>
             <div className='selectIntro'>
-            <button onClick={handlefirstbutton}>商品簡介</button>
-            <button onClick={handlesecondbutton}>評價</button>
+            <button onClick={handlefirstbutton}>{t("productIntro")}</button>
+            <button onClick={handlesecondbutton}>{t("make-comment")}</button>
             </div>
 <div className='details'>
     <div className="productDetails">
@@ -115,7 +130,7 @@ setColor(e.target.value)
         <p>{result.All[index-1].intro5}</p>
     </div>
     <div className='comment'>
-    <p>產品還沒有評價，為這個產品建立第一個評價</p>
+    <p>{t("comment")}</p>
 
     </div>
 </div>

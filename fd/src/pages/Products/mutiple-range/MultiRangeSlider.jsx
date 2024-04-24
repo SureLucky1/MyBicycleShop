@@ -2,16 +2,11 @@ import React, { useContext, useCallback, useEffect, useState, useRef } from "rea
 import PropTypes from "prop-types";
 import "./multiRangeSlider.css";
 import ShowContext from "../../../index";
-const MultiRangeSlider = ({ 
-  min, 
-  max, 
-  onChange, 
- handleInputChange, handleClick }) => {
- const [minVal, setMinVal] = useState(min);
- const [maxVal, setMaxVal] = useState(max);
-  const {selectedPrice, 
-    setSelectedPrice, 
-    selectedCategory, setSelectedCategory, setQuery} = useContext(ShowContext)
+
+const MultiRangeSlider = ({ min, max, onChange }) => {
+  const [minVal, setMinVal] = useState(min);
+  const [maxVal, setMaxVal] = useState(max);
+  const { setSelectedPrice } = useContext(ShowContext);
   const minValRef = useRef(min);
   const maxValRef = useRef(max);
   const range = useRef(null);
@@ -31,7 +26,7 @@ const MultiRangeSlider = ({
       range.current.style.left = `${minPercent}%`;
       range.current.style.width = `${maxPercent - minPercent}%`;
     }
-  }, [minVal, getPercent]);
+  }, [minVal, maxVal]); // Added maxVal to the dependency array
 
   // Set width of the range to decrease from the right side
   useEffect(() => {
@@ -41,17 +36,26 @@ const MultiRangeSlider = ({
     if (range.current) {
       range.current.style.width = `${maxPercent - minPercent}%`;
     }
-  }, [maxVal, getPercent]);
+  }, [minVal, maxVal]); // Added minVal to the dependency array
 
   // Get min and max values when their state changes
   useEffect(() => {
-    if (selectedCategory || selectedPrice) {
-      onChange({ min: minVal, max: maxVal });
-      //setSelectedMinPrice(minVal.toString());
-      //setSelectedMaxPrice(maxVal.toString());
-      setSelectedPrice({price:{ min: minVal, max: maxVal }});
-    }
-  }, [minVal, maxVal, onChange]);
+    onChange({ min: minVal, max: maxVal });
+    setSelectedPrice({ price: { min: minVal, max: maxVal } });
+  }, [minVal, maxVal]); // This useEffect is correct
+
+  // Handle range inputs
+  const handleMinInputChange = (event) => {
+    const value = Math.min(Number(event.target.value), maxVal - 1);
+    setMinVal(value);
+    minValRef.current = value;
+  };
+
+  const handleMaxInputChange = (event) => {
+    const value = Math.max(Number(event.target.value), minVal + 1);
+    setMaxVal(value);
+    maxValRef.current = value;
+  };
 
   return (
     <div className="rangetype">
@@ -60,15 +64,7 @@ const MultiRangeSlider = ({
         min={min}
         max={max}
         value={minVal}
-        //handleChange={handleChange}
-        onChange={(event) => {
-          const value = Math.min(Number(event.target.value), maxVal - 1);
-          setMinVal(value);
-          
-          //setSelectedCategory(event.target.value);
-          minValRef.current = value;
-        }}
-        //handleminChange={ handleminChange}
+        onChange={handleMinInputChange}
         className="thumb thumb--left"
         style={{ zIndex: minVal > max - 100 && "5" }}
       />
@@ -76,25 +72,15 @@ const MultiRangeSlider = ({
         type="range"
         min={min}
         max={max}
-        //handleChange={handleChange}
         value={maxVal}
-        onChange={(event) => {
-          const value = Math.max(Number(event.target.value), minVal + 1);
-          setMaxVal(value);
-          
-          //setSelectedCategory(event.target.value);
-          maxValRef.current = value;
-        }}
-        //handlemaxChange={ handlemaxChange}
+        onChange={handleMaxInputChange}
         className="thumb thumb--right"
       />
 
       <div className="slider">
         <div className="slider__track" />
         <div ref={range} className="slider__range" />
-        {/* <div className="slider__left-value">{minVal}</div>
-        <div className="slider__right-value">{maxVal}</div> */}
-        <label className="value" htmlFor="value">HKD ${minVal} - ${maxVal} </label>
+        <label className="value" htmlFor="value">HKD ${minVal} - ${maxVal}</label>
       </div>
     </div>
   );

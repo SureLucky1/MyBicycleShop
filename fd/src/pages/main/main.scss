@@ -428,7 +428,7 @@
         section.smallScreen {
             display: flex;
             width: 100%;
-            padding: 0px 25px;
+            padding: 0px 15px;
             margin-bottom: 100px;
 
             .info {
@@ -444,23 +444,27 @@
                     flex-direction: row;
                     justify-content: space-between;
 
-
-                    select {
+                    button {
+                        background-color: white;
                         display: flex;
-                        width: 23%;
-                        font-size: 25px;
+                        width: 115px;
+                        font-size: 18px;
+                        align-items: center;
+                        justify-content: space-between;
 
-                        option {
-                            z-index: -1;
+                        svg {
+                            width: 30px;
+                            height: 30px;
                         }
-
                     }
+
+
 
                     .search {
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
-                        width: 72%;
+                        width: 63%;
                         font-size: 38px;
                         height: 50px;
                         margin-top: 0px;
@@ -497,6 +501,7 @@
                 select {
                     height: 50px;
                     font-size: 30px;
+                    margin-top: 10px;
                 }
 
 
@@ -591,8 +596,58 @@
 
 @media only screen and (max-width: 400px) {
     .body section.smallScreen .info select {
-        height: 50px;
-        font-size: 25px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .body section.smallScreen .info div .search {
+        height: 40px;
+    }
+
+    .body section.smallScreen {
+        display: flex;
+        width: 100%;
+        padding: 0px 15px;
+        margin-bottom: 100px;
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin: 25px 0px;
+
+            div {
+                margin-top: 25px;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                button {
+                    background-color: white;
+                    display: flex;
+                    margin-top: 0px;
+
+                    svg {
+                        width: 25px;
+                        height: 30px;
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+    .body section.smallScreen .info div .search .type {
+        height: 30px;
+        font-size: 20px;
+        position: relative;
+        width: 100%;
+        left: 0;
+        border: none;
+        outline: none;
     }
 
     .body section.smallScreen .productGroup .product img {
@@ -600,6 +655,6 @@
     }
 
     select option {
-        font-size: 20px;
+        font-size: 15px;
     }
 }

@@ -5,13 +5,18 @@ import ShowContext from '../../index';
 import MultiRangeSlider from "./mutiple-range/MultiRangeSlider"
 import {useDispatch, useSelector} from 'react-redux';
 import { addToCart } from '../../component/payment/Redux/cartSlice';
+import { useTranslation, Trans } from 'react-i18next';
 import { addPrice } from '../../component/payment/Redux/priceSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ArrowRightOutlined, CopyrightOutlined, ArrowUpOutlined, ArrowDownOutlined, ShoppingCartOutlined, SolutionOutlined, HomeOutlined, LockOutlined } from '@ant-design/icons';
 import { faEnvelope, faMagnifyingGlass, faUpLong } from '@fortawesome/free-solid-svg-icons'
-const Productlist = ({myinfo, sortAscending, result2, min, max, onChange, handleChange, result, query, handleInputChange, handleClick}) => {
+const Productlist = ({ sortAscending, myinfo, result2, min, max, onChange, handleChange, result, query, handleInputChange, handleClick}) => {
 
-
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (lang) => {
+      i18n.changeLanguage(lang);
+      
+    };
     const {setSortedProducts, sortedProducts, selectedMinPrice, selectedMaxPrice, selectedPrice, minVal, setMinVal, maxVal, setMaxVal, show, setShow, setSelectedCategory, selectedCategory, setQuery} = useContext(ShowContext);
     const sortDescending = () => {
         const sorted = [...sortedProducts].sort((a, b) => b.price - a.price);
@@ -47,46 +52,46 @@ const Productlist = ({myinfo, sortAscending, result2, min, max, onChange, handle
     <section className='bigScreen'>
         <div className='bigScreen-wrapper'>
                         <div className='left'>
-            <h4><strong>商品</strong></h4>
+            <h4><strong>{t("merchandise")}</strong></h4>
             <div className='search'>
 <input className="type" onChange={handleInputChange}
-      value={query} placeholder='輸入關鍵字/商品編號'/>
+      value={query} placeholder={t("enter")}/>
       <FontAwesomeIcon icon={faMagnifyingGlass} className='searchGlass'/>
 </div>
 <div className='item-hover'>
-            <h5>全部商品</h5>
+            <h5>{t("product")}</h5>
 </div>
 <div className='item-hover'>
         <select onChange={handleClick}>
-        <option value="All">戶外運動 Outdoor</option>
-        <option value="Electric Mobility">電動可移動工具 Electric Mobility</option>
-        <option value="Manual Bicycle">人力滑板車, 單車 Manual Bicycle</option>
-        <option value="Accessories">配件類 Accessories</option>
+        <option value="All">{t("outdoor")}</option>
+        <option value="Electric Mobility">{t("electricMobility")}</option>
+        <option value="Manual Bicycle">{t("manualBicycle")}</option>
+        <option value="Accessories">{t("accessories")}</option>
       </select>
 </div>
 
 
         <div className='info'>
-            <h4>排序</h4>
+            <h4>{t("sort")}</h4>
 <select onChange={sortAscending}>
 <option value="Asc" 
 //sortAscending={sortAscending} 
 //onClick={sortAscending}
->以較低價錢優先排序<ArrowUpOutlined /></option>
+>{t("sortbylower")}<ArrowUpOutlined /></option>
 <option value="Desc"
 //sortDescending={sortDescending} 
 //onClick={sortDescending}
->以較高價錢優先排序<ArrowDownOutlined /></option>
+>{t("sortbyhigher")}<ArrowDownOutlined /></option>
 </select>
 <div className='range'>
-      <h4>價格範圍</h4>
+      <h4>{t("priceRange")}</h4>
       <MultiRangeSlider
       min={0}
       max={10000}
       handleChange={handleChange}
      //result={result} handleClick={handleClick} handleInputChange={handleInputChange}
      //onChange={onChange}
-     onChange={({ min, max }) => console.log(`min = ${min}, max = ${max}`)}
+     onChange={({ min, max }) => {}}
     />
     </div>
         </div>
@@ -102,20 +107,20 @@ const Productlist = ({myinfo, sortAscending, result2, min, max, onChange, handle
     <section className='smallScreen'> 
 <div className='info'>
 <select onChange={sortAscending}>
-<option value="Asc" >以較低價錢優先排序</option>
-<option value="Desc">以較高價錢優先排序</option>
+<option value="Asc">{t("sortbylower")}</option>
+    <option value="Desc">{t("sortbyhigher")}</option>
 </select>
 <div>
 <select 
  onClick={showSidebar}
 //  onBlur={hideSidebar}
 >
-<option >戶外運動 Outdoor</option>
+<option >{t("outdoor")}</option>
 
 </select>
 <div className='search'>
 <input className='type' onChange={handleInputChange}
-      value={query} placeholder='輸入關鍵字/商品編號'/>
+      value={query} placeholder={t("enter")}/>
             <FontAwesomeIcon icon={faMagnifyingGlass} className='searchGlass'/>
       </div>
 </div>
@@ -125,7 +130,7 @@ const Productlist = ({myinfo, sortAscending, result2, min, max, onChange, handle
 
     </section>
 
-    <section className="map">
+    {/* <section className="map">
         <div className='mapContent'>
     <iframe 
     className='left'
@@ -134,28 +139,28 @@ const Productlist = ({myinfo, sortAscending, result2, min, max, onChange, handle
     loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     <div className='right'>
     <div>
-        <h5>華華科技代步研發有限公司</h5>
-        <h5>地址 : 金門高華工業大廈</h5>
+        <h5>{t("companyName")}</h5>
+        <h5>{t("location1")}</h5>
     </div>
     <div>
-        <h5>眾樂樂單車店</h5>
-        <p>智能車體驗店 (暫設零售點) : 金門開心路101芯海1/F（御龍村金門河畔單車徑旁）</p>
-        <h5>教你走 : </h5>
+        <h5>{t("shopName")}</h5>
+        <p>{t("experienceStore")}</p>
+        <h5>{t("path")}</h5>
         <p>https://www.youtube.com/watch?v=g7zC_LYk2Xo</p>
     </div>
     <div>
-        <p>星期一至五1300~1800 (可預約到1900)</p>
-        <p>星期六日及假期1200~1800 (可預約到1900)</p>
-        <p>星期四放假</p>
+        <p>{t("officeHours1")}</p>
+        <p>{t("officeHours2")}</p>
+        <p>{t("vocation")}</p>
     </div>
     <div>
         <p>Whatsapp/ Signal : 55967646</p>
         <p>Email : 11boyscooter@gmail.com</p>
-        <p>分銷渠道：各大電器連鎖店、主流體育用品店、大型網店、3C數碼店、汽車/摩托車店、汽車用品/服務店、電腦商店、單車店等。<br />(為分銷順利進行，按商店性質和地點分配，以上措施優先安排早加入者。)</p>
-        <p>發展目標 : 計劃兩年內進入全面分銷模式</p>
+        <p>{t("distribution")}<br />{t("distributionRule")}</p>
+        <p>{t("target")}</p>
         <p>If you need English speaking customer support, please contact us at M#55967646</p>
     </div></div></div>
-    </section>
+    </section> */}
 
     </div>
   )

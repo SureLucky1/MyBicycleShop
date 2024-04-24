@@ -34,6 +34,9 @@
   width: 150px;
   height: 150px;
 }
+.checkout-wrapper section .table:last-child {
+  display: none;
+}
 .checkout-wrapper section .btn-secondary {
   position: relative;
   right: 0;
@@ -83,35 +86,84 @@
   .checkout-wrapper section {
     margin-top: 50px;
   }
-  .checkout-wrapper section .table {
+  .checkout-wrapper section .max {
     margin-top: 50px;
+    display: none;
   }
-  .checkout-wrapper section .table thead tr th:nth-child(2) {
+  .checkout-wrapper section .max thead tr th:nth-child(2) {
     width: 10%;
   }
-  .checkout-wrapper section .table thead tr th:nth-child(3) {
+  .checkout-wrapper section .max thead tr th:nth-child(3) {
     width: 44%;
   }
-  .checkout-wrapper section .table thead tr th:nth-child(4) {
+  .checkout-wrapper section .max thead tr th:nth-child(4) {
     width: 13.5%;
   }
-  .checkout-wrapper section .table thead tr th:nth-child(5) {
+  .checkout-wrapper section .max thead tr th:nth-child(5) {
     width: 13.5%;
   }
-  .checkout-wrapper section .table thead tr th:nth-child(6) {
+  .checkout-wrapper section .max thead tr th:nth-child(6) {
     width: 27%;
   }
-  .checkout-wrapper section .table tbody tr td .btn-secondary {
+  .checkout-wrapper section .max tbody tr td .btn-secondary {
     position: relative;
     right: 0;
     font-size: 15px;
   }
-  .checkout-wrapper section .table tbody tr td span {
+  .checkout-wrapper section .max tbody tr td span {
     font-size: 15px;
   }
-  .checkout-wrapper section .table .c-image {
-    width: 150px;
-    height: 150px;
+  .checkout-wrapper section .max tbody tr td .c-image {
+    width: 150%;
+    height: auto;
+  }
+  .checkout-wrapper section .table:last-child {
+    display: block;
+  }
+  .checkout-wrapper section .table:last-child thead tr th:nth-child(2) {
+    width: 18%;
+  }
+  .checkout-wrapper section .table:last-child thead tr th:nth-child(3) {
+    width: 44%;
+  }
+  .checkout-wrapper section .table:last-child tbody {
+    display: block;
+  }
+  .checkout-wrapper section .table:last-child tbody tr {
+    width: 100%;
+  }
+  .checkout-wrapper section .table:last-child tbody tr td div {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .checkout-wrapper section .table:last-child tbody tr td div .img {
+    display: flex;
+    align-items: flex-start;
+    width: 65%;
+    justify-content: flex-start;
+  }
+  .checkout-wrapper section .table:last-child tbody tr td div .img .c-image {
+    width: 100%;
+    height: auto;
+  }
+  .checkout-wrapper section .table:last-child tbody tr td div div:last-child {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+  }
+  .checkout-wrapper section .table:last-child tbody tr td div div:last-child p,
+  .checkout-wrapper section .table:last-child tbody tr td div div:last-child button {
+    align-self: center;
+  }
+  .checkout-wrapper section .table:last-child tbody tr td div div:last-child div {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    padding: 0px 10px;
+    justify-content: space-between;
+  }
+  .checkout-wrapper section .table:last-child tbody tr:last-child td span {
+    margin-left: 18px;
   }
   .checkout-wrapper .become-member {
     position: absolute;

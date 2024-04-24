@@ -2,10 +2,12 @@ import React, { useState, useContext } from 'react';
 import "./login.css"
 import ProfilePage from "../userProfile/Profile"
 import ShowContext from '../../index';
+import { useTranslation, Trans } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
 import { Table, Button, Label , FormGroup, Input, Col, Form, Row  } from 'reactstrap';
 const Login = () => {
-
+  const { t, i18n } = useTranslation();
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const {chooseRecord, setChooseRecord, login, setLogin} = useContext(ShowContext);
@@ -66,21 +68,21 @@ const navigate = useNavigate()
     <>
     {login?  <ProfilePage />  : <div className='form'>        
     <Form>
-    <h4>登入商店</h4>
+    <h4>{t("logtoShop")}</h4>
 <Row>
   <Col md={6}>
     <FormGroup>
       <Input
         id="exampleEmail"
         name="email"
-        placeholder="電郵"
+        placeholder={t("email")}
         type="email"
         onChange={(e) => setEmail(e.target.value)}
       />
                 <Input
         id="examplePassword"
         name="password"
-        placeholder="密碼"
+        placeholder={t("PW")}
         type="password"
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -89,28 +91,28 @@ const navigate = useNavigate()
                 <Input
         id="examplePassword"
         name="check"
-        placeholder="聯絡號碼"
+        placeholder={t("customContact")}
         type="checkbox"
       />
           <Label for="check">
-          自動登入
+          {t("autoLogin")}
     </Label>
     </FormGroup>
   </Col>
 </Row>
 <Button onClick={handleSubmit}style={{backgroundColor: "black", color: "rgb(170, 170, 170)", }}>
-登入商店
+{t("logtoShop")}
 </Button>
 <Button style={{backgroundColor: "rgb(170, 170, 170)", color: "white"}}>
 <Link
                     to="/register/"
                     style={{ textDecoration: "none", color: "white" }}
-                  >新用戶註冊</Link>
+                  >{t("newUser")}</Link>
 </Button>
 </Form>
 <div className="forgetPW">
-<span>忘記密碼?</span>
-<span>前往管理員登入</span>
+<span>{t("forgetPW")}</span>
+<span>{t("admin")}</span>
 </div>
 </div>}
 

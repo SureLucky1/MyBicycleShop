@@ -1,14 +1,22 @@
 import React from 'react'
 import "./Footer.css"
+import { useTranslation, Trans } from 'react-i18next';
+
 const Footer = () => {
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (lang) => {
+      i18n.changeLanguage(lang);    
+      
+    };
   return (
+    
     <div>
         <div className='footer-wrapper'>
             <div className='upper'>
                 <div className='left'>
 
                     <img src="" alt="" />
-                    <p>8年時間的奮鬥經營，追求持續發展，致力為顧客的短途出行服務。</p>
+                    <p>{t("footer")}</p>
 
                 </div>
                 <div className='right'>                    

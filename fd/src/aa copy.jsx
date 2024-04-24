@@ -20,20 +20,35 @@ import Order from './pages/myOrder/Order.jsx';
 import ResetPassword from "./pages/userProfile/ResetPassword.jsx"
 import ShowContext from './index.js';
 import ProductPage from './pages/Products/product-page/productPage.jsx';
-import { allProducts } from './data.jsx';
+import { allChProducts, allEngProducts, moneyData, allSimpleChProducts } from './data.jsx';
+
 import Checkout from './pages/checkout/checkout copy.jsx';
-import { addToCart } from './component/payment/Redux/cartSlice copy.jsx';
-import { addPrice } from './component/payment/Redux/priceSlice.jsx';
-import { Routes, Route, Link } from "react-router-dom";
+import { addToCart, setCurrency2 } from './component/payment/Redux/cartSlice copy.jsx';
+import { addPrice, subtractPrice, clearTotal, setCurrency }  from './component/payment/Redux/priceSlice.jsx';
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faMagnifyingGlass, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 function App() {
   const cartitems = useSelector(state => state.cart.cartItems);
-  console.log(cartitems)
+  //console.log(cartitems)
+  const [show, setShow] = useState("none");
+  const navigation = useNavigate()
+  const [Lan, setLan] = useState("繁體中文")
+  const [moneyIndex, setMoney] = useState(56)
   const [index, setIndex] = useState(0)
-
+  const Total = useSelector(state => state.price.total);
   const [qty, setQty] = useState(0);
+  const [rightsidebardisplay, setRightSideBarDisplay] = useState("none");
+  const [leftsidebardisplay, setLeftSideBarDisplay] = useState("none");
+  const [rightsidebarWidth, setRightSideBarWidth] = useState("0");
+  const [leftsidebarWidth, setLeftSideBarWidth] = useState("0");
+  //const [currency, setCurrency] = useState(0);
+  const handleAdd = ()=>{
+    
+  }
+  useEffect(()=>{
 
+  })
 //   useEffect(()=>{
 //     cartitems.map((item, i)=>{
 //           if(item[i].cartQuantity === 0){
@@ -54,14 +69,57 @@ function App() {
   const [sortedProducts, setSortedProducts] = useState(null);
   const dispatch = useDispatch()
   const [query, setQuery] = useState("");
+  const [result, setResult] = useState([]);
+
   const handleInputChange = (event) => {
     setQuery(event.target.value);
   };
+
+  const handleSideClick = (e) =>{
+    handleSideBar(e);
+    handleSideBar2(e);
+
+  }
+
+  const handleSideBar = (e)=>{ 
+    if (e.target.className === "material-symbols-outlined right") {
+      if(rightsidebardisplay ==="none"){
+        setRightSideBarDisplay("flex");
+        setRightSideBarWidth("50%");
+        setLeftSideBarDisplay("none")
+        setShow("none")
+      }else if(rightsidebardisplay === 'flex'){
+        setRightSideBarDisplay("none")
+        setRightSideBarWidth("0");
+      }
+    }else if(e.target.className === "material-symbols-outlined left"){
+      if(leftsidebardisplay ==="none"){
+        setLeftSideBarDisplay("flex");
+        setRightSideBarDisplay("none")
+        setRightSideBarWidth("0");
+        setShow("none")
+      }else if(leftsidebardisplay === 'flex'){
+        setLeftSideBarDisplay("none")
+        setLeftSideBarWidth("0");
+      }
+    }else{
+      setRightSideBarDisplay("none")
+      setLeftSideBarDisplay("none")
+      setRightSideBarWidth("0");
+    }
+    }
+
+const handleSideBar2 = (e) => {
+  if (!e.target.classList.contains("leftSidebar2")) {
+    const sidebar = document.querySelector('.leftSidebar');
+    sidebar.style.display = "none";
+  }
+}
+
   const handleClick = (event) => {
-
+    const sidebar = document.querySelector('.leftSidebar');
 setSelectedCategory(event.target.value);          
-  
-
+      sidebar.style.display = "none";
   };
 
   const sortAscending = (event) => {
@@ -102,23 +160,26 @@ setSelectedCategory(event.target.value);
     return filteredProducts.map((item, i) => {
       return (
         <div key={i} className='product' onClick={()=>{setIndex(item.id)}}>
-          <Link to="/productInfo" style={{ textDecoration: "none" }}><img src={item.img1} />
-          <h6>{item.title}</h6>
-          <span>HKD ${item.price}</span></Link>
+          <Link to="/productInfo" style={{ textDecoration: "none", color:"black" }}><img src={item.img1} />
+          <h6>{item.name}</h6>
+          <span>{moneyData[moneyIndex].money} ({moneyData[moneyIndex].symbol}){Math.floor(item.price * moneyData[moneyIndex].currency)}</span></Link>
           <button className="btn btn-warning" onClick={() => {
             //setName(item.title);
             //setPrice(item.price);
             //setQuantity(item.cartQuantity);
-            dispatch(addToCart({id: item.id, title: item.title, image: item.img1, price:item.price}));
-            dispatch(addPrice(item.price));
+            dispatch(addToCart({id: item.id, title: item.title, image: item.img1, price: Number(item.price), curr: moneyData[moneyIndex].currency}));
+            //dispatch(setCurrency2(moneyData[moneyIndex].currency));
+            dispatch(addPrice({productId: item.id}));
+
+            console.log( Number(item.price)* moneyData[moneyIndex].currency)
             //setQty(cartitems[i].cartQuantity);
           }}>Add to cart</button>
         </div>
       );
     });
   }
-  const result = filteredData( allProducts, selectedCategory, selectedPrice, query, sortedProducts);
-  
+  //const result = filteredData( allProducts, selectedCategory, selectedPrice, query, sortedProducts);
+    
   function info(result){
       function prePage(){
   if(currentPage !== 1){
@@ -154,36 +215,47 @@ setSelectedCategory(event.target.value);
                      </ul>
                      </nav>
     </>
-
-
-        
         );
   
   }
+
   const myinfo = info(result)
-  const [show, setShow] = useState("none");
+  useEffect(() => {
+    let updatedResult = [];
+    if(Lan === "繁體中文"){
+      updatedResult = filteredData(allChProducts, selectedCategory, selectedPrice, query, sortedProducts);
+    } else if(Lan === "简体中文"){
+      updatedResult = filteredData(allSimpleChProducts, selectedCategory, selectedPrice, query, sortedProducts);
+    } else if(Lan === "English"){
+      updatedResult = filteredData(allEngProducts, selectedCategory, selectedPrice, query, sortedProducts);
+    }
+    // 確保這裡的 setResult 不會引起依賴項的變化
+    setResult(updatedResult);
+  }, [Lan, moneyIndex, allChProducts, allSimpleChProducts, allEngProducts, selectedCategory, selectedPrice, query, sortedProducts]);
+  
 
-  useEffect(()=>{
-    const sidebar = document.querySelector('.leftSidebar');
-    sidebar.style.display = show;
-    sidebar.style.width = '60vw';
-  }, [show])
 
-  const hideSidebar = () => {
-    setShow("none")
-  }
 
-  const showSidebar = () => {
-    setShow("flex")
-  }
+  // useEffect(()=>{
+  //   const sidebar = document.querySelector('.leftSidebar');
+  //   sidebar.style.display = show;
+  //   sidebar.style.width = '60vw';
+  // }, [show])
 
+  // const hideSidebar = () => {
+  //   setShow("none")
+  // }
   return (
-    <ShowContext.Provider value={{qty, setQty, index, login, setLogin, chooseRecord, setChooseRecord, name, setName, price, setPrice, quantity, setQuantity, sortedProducts, setSortedProducts, setSelectedPrice, show, setShow, query, setQuery, selectedCategory, setSelectedCategory}}>
-      <div className="App">
-        <div onMouseLeave={hideSidebar} onMouseEnter={showSidebar} className='leftSidebar'>
+    <ShowContext.Provider value={{Lan, setLan, setCurrency, moneyIndex, setMoney, rightsidebarWidth, setRightSideBarWidth, leftsidebardisplay, setLeftSideBarDisplay, rightsidebardisplay, setRightSideBarDisplay, Total, qty, setQty, index, login, setLogin, chooseRecord, setChooseRecord, name, setName, price, setPrice, quantity, setQuantity, sortedProducts, setSortedProducts, setSelectedPrice, show, setShow, query, setQuery, selectedCategory, setSelectedCategory}}>
+      <div className="App" onClick={handleSideClick}>
+        <div className='leftSidebar' 
+        onBlur={handleSideBar2}
+        >
           <h1><strong>商品分類</strong></h1>
           <h1>全部商品</h1>
-          <select onChange={handleClick}>
+          <select onChange={handleClick} 
+          className='leftSidebar2'
+          >
         <option value="All">戶外運動 Outdoor</option>
         <option value="Electric Mobility">電動可移動工具 Electric Mobility</option>
         <option value="Manual Bicycle">人力滑板車, 單車 Manual Bicycle</option>
@@ -193,7 +265,7 @@ setSelectedCategory(event.target.value);
         <UpperHeader query={query} handleInputChange={handleInputChange}/>
         <LowerHeader />
         <Routes>
-        <Route path="/" element={<Main myinfo={myinfo} sortAscending={sortAscending} handleClick={handleClick} query={query} handleInputChange={handleInputChange}/>} />
+        <Route path="/" element={<Main sortAscending={sortAscending} myinfo={myinfo}  handleClick={handleClick} query={query} handleInputChange={handleInputChange}/>} />
         <Route path="about-us/" element={<AboutUs />} />
         <Route path="privacy/" element={<Privacy />} />
       <Route path="legalization" element={<Legalization />} />
@@ -207,7 +279,7 @@ setSelectedCategory(event.target.value);
       <Route path="profile/" element={<ProfilePage />} />
       <Route path="/profile/update" element={<UpdateProfile />} />
       <Route path="/reset-password/:useremail/:token" element={<ResetPassword />} />
-      <Route path="/productInfo" element={<ProductPage result={allProducts} />} />
+      <Route path="/productInfo" element={<ProductPage resultCh={allChProducts} resultEng={allEngProducts} resultSimpleChi={allSimpleChProducts}/>} />
       </Routes>
         <Footer />
       </div>

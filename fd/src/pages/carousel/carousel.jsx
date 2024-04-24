@@ -4,7 +4,6 @@ import {
   CarouselItem,
   CarouselControl,
   CarouselIndicators,
-  CarouselCaption,
 } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './carousel.css'
@@ -14,7 +13,8 @@ const items = [
     key: 1,
   },
   {
-    src: 'https://www.mit-machining.com/store_image/scoodataiwan/A1162021053408.jpg',
+    //src: 'https://www.mit-machining.com/store_image/scoodataiwan/A1162021053408.jpg',
+    src: 'https://img.shoplineapp.com/media/image_clips/627df56b0efa81000fd7b364/original.png?1652421994',
     key: 2,
   },
   {
@@ -52,10 +52,6 @@ function MyCarousel(args) {
         key={item.src}
       >
         <img src={item.src} alt={item.altText} />
-        <CarouselCaption
-          captionText={item.caption}
-          captionHeader={item.caption}
-        />
       </CarouselItem>
     );
   });

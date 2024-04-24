@@ -1,16 +1,17 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import ReactDOM from 'react-dom'
+import ShowContext from '../..';
 import {useDispatch, useSelector} from 'react-redux';
 import {addToCart, decreaseCart, removeFromCart, clearCart } from '../../component/payment/Redux/cartSlice';
 import { addPrice, subtractPrice } from '../../component/payment/Redux/priceSlice';
 import { Table, Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './checkout.css'
+import './order.css'
 const Checkout = () => {
     const cartitems = useSelector(state => state.cart.cartItems);
     const Total = useSelector(state => state.price.total);
     const dispatch = useDispatch();
-
+    const {currency, setCurrency, rightsidebarWidth, setRightSideBarWidth, leftsidebardisplay, setLeftSideBarDisplay, rightsidebardisplay, setRightSideBarDisplay, chooseRecord, setChooseRecord, login, setLogin} = useContext(ShowContext);
     const handleAddToCart = (item) => {
         dispatch(addToCart(item));
         dispatch(addPrice(item.price));
@@ -36,7 +37,7 @@ const Checkout = () => {
                 <section>
                     <h1>購物車</h1>
                     <Button>移除已選</Button>
-                    <Table style={{width:"100%"}}>
+                    <Table className="max" style={{width:"100%"}}>
                         <thead>
                             <tr>
                                 <th style={{width:"5%"}}>
@@ -66,7 +67,7 @@ const Checkout = () => {
                                     <td><img src={item.image} className="c-image" alt='' /></td>
                                     <td>{item.title}</td>
                                     <td><Button onClick={()=>{handledecreaseCart(item)}}>-</Button>{item.cartQuantity}<Button onClick={()=>{handleAddToCart(item)}}>+</Button></td>
-                                    <td style={{display:"flex", textAlign: "right"}}>${item.price * item.cartQuantity}</td>
+                                    <td style={{display:"flex", textAlign: "right"}}>${item.price * currency * item.cartQuantity}</td>
                                     <td><button className="btn btn-warning btn-sm" onClick={() => handleRemoveFromCart(item)}>Remove</button></td>
                                 </tr>
                             ))}

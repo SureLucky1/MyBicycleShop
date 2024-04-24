@@ -3,7 +3,7 @@ import ShowContext from '../../../../index'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { allProducts } from '../../../../data';
+import { allChProducts } from '../../../../data';
 import "./slider.css"
 class SliderComponent extends React.Component {
   constructor(props) {
@@ -49,13 +49,13 @@ class SliderComponent extends React.Component {
         {({ index}) => (
           <div>
             <Slider ref={this.slider1} {...settingsFor}>
-              <img src={allProducts.All[index-1].img1} alt="" />
-              <img src={allProducts.All[index-1].img2} alt="" />
+              <img src={allChProducts.All[index-1].img1} alt="" />
+              <img src={allChProducts.All[index-1].img2} alt="" />
             
             </Slider>
             <Slider ref={this.slider2} {...settingsNav}>
-              <img src={allProducts.All[index-1].img1} alt="" />
-              <img src={allProducts.All[index-1].img2} alt="" />
+              <img src={allChProducts.All[index-1].img1} alt="" />
+              <img src={allChProducts.All[index-1].img2} alt="" />
   
             </Slider>
           </div>

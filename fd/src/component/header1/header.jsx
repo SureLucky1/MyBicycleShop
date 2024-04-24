@@ -1,148 +1,203 @@
-import React, { useState, useContext} from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 import { ArrowRightOutlined, CopyrightOutlined, GlobalOutlined, ShoppingCartOutlined, SolutionOutlined, HomeOutlined, LockOutlined } from '@ant-design/icons';
 import ReactDOM from 'react-dom'
 import ShowContext from '../..';
 import { Link, useLocation, useNavigate,   } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope, faMagnifyingGlass, faHouse, faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faMagnifyingGlass, faHouse, faCartShopping, faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import "./header.css"
+import { useTranslation, Trans } from 'react-i18next';
+import InputModal from './Modal/Modal2';
+import { moneyData } from '../../data';
+
 import {
     Dropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    UncontrolledDropdown
   } from 'reactstrap';
+import { useDispatch } from 'react-redux';
+
 const UpperHeader = ({ handleInputChange, query, handleClick }) => {
-  const {chooseRecord, setChooseRecord, login, setLogin} = useContext(ShowContext);
+  const { t, i18n } = useTranslation();
+const changeLanguage = (lang) => {
+  i18n.changeLanguage(lang);
+  
+};
+const {Lan, setLan, moneyIndex, setMoney, currency, setCurrency, rightsidebarWidth, setRightSideBarWidth, leftsidebardisplay, setLeftSideBarDisplay, rightsidebardisplay, setRightSideBarDisplay, chooseRecord, setChooseRecord, login, setLogin} = useContext(ShowContext);
+const [Log, setLog] = useState("登入");
+const [personalInfo, setPersonalInfo] = useState("個人資料");
+useEffect(()=>{
+  if(Lan === "繁體中文"){
+    setLog("登入");
+    setPersonalInfo("個人資料");
+  }else if(Lan === "简体中文"){
+    setLog("登录");
+    setPersonalInfo("个人资料");
+  }else if(Lan === "English"){
+    setLog("Log In");
+    setPersonalInfo("Info");
+  }
+}, [Lan])
     const [dropdownOpen, setDropdownOpen] = useState(false);
+const dispatch = useDispatch()
+    const [showModal, setShowModal] = useState(false);
     const toggle = () => setDropdownOpen((prevState) => !prevState);
     const [dropdownOpenLan, setDropdownOpenLan] = useState(false);
     const toggleLan = () => setDropdownOpenLan((prevState) => !prevState);
     const showSidebarLeft = () => {
-        const sidebar = document.querySelector('.sidebar-left');
-        sidebar.style.display = 'flex';
+      const sidebarLeft = document.querySelector('.sidebar-left');
+      sidebarLeft.style.display = leftsidebardisplay;
+      if(leftsidebardisplay =="none"){
+        setLeftSideBarDisplay("flex");
+      }else if(leftsidebardisplay == 'flex'){
+        setLeftSideBarDisplay("none")
+      }
+        // const sidebarLeft = document.querySelector('.sidebar-left');
+        // sidebarLeft.style.display = 'flex';
+        // const sidebarRight = document.querySelector('.sidebar-right');
+        // sidebarRight.style.display = 'none';
     }
     // const hideSidebarLeft = () => {
     //     const sidebar = document.querySelector('.sidebar-left');
     //     sidebar.style.display = 'none';
     //     sidebar.style.width = '0px';
     // }
+    const setInput = () => {
+      if(showModal === false){
+        setShowModal(true)
+      }else{
+        setShowModal(false)
+      }
+    };
+    const setInputClose = () => {
+      setShowModal(false);
+    };
+    useEffect(()=>{
+      dispatch(setCurrency(moneyData[moneyIndex].currency))
+    }, [moneyIndex])
     const showSidebarRight = () => {
-        const sidebar = document.querySelector('.sidebar-right');
-        sidebar.style.display = 'flex';
-         sidebar.style.width = '50%';
+        const sidebarRight = document.querySelector('.sidebar-right');
+        const sidebarLeft = document.querySelector('.sidebar-left');
+        sidebarRight.style.display = rightsidebardisplay;
+        sidebarRight.style.width = rightsidebarWidth;
+        if(rightsidebardisplay =="none"){
+          setRightSideBarDisplay("flex");
+          setRightSideBarWidth("50%");
+        }else if(rightsidebardisplay == 'flex'){
+          setRightSideBarDisplay("none")
+          setRightSideBarWidth("0");
+        }
     }
     const hideSidebarRight = () => {
         const sidebar = document.querySelector('.sidebar-right');
         sidebar.style.display = 'none';
         // sidebar.style.width = '0px';
     }
-    const [Lan, setLan] = useState("繁體中文")
-    const [money, setMoney] = useState("HKD")
+    
   return (
     <nav className='nav1'>
 
-<ul className='sidebar-right'>
-    <li className="" onClick={hideSidebarRight}id="">
-        <span  class="material-symbols-outlined">
-close
-</span></li>
+<ul className='sidebar-right' style={{width: rightsidebarWidth, display: rightsidebardisplay}}>
     <li className="" id=""><Link
     className='link-item'
                     to="/"
-                  ><HomeOutlined />主頁</Link></li>
+                  ><HomeOutlined />{t("home")}</Link></li>
     <li className="" id=""><Link
     className='link-item'
                     to="checkout/"
                     style={{ textDecoration: "none", color: "#fff" }}
-                  ><ShoppingCartOutlined />購物車</Link></li>
+                  ><ShoppingCartOutlined />{t("cart")}</Link></li>
 <li className="me-1" id=""><GlobalOutlined />{Lan}
 <div>
       <ul className="dropdown-menu">
-    <li onClick={()=>{setLan('繁體中文')}}>繁體中文</li>
-    <li onClick={()=>{setLan('普通話')}}>普通話</li>
-    <li onClick={()=>{setLan('English')}}>English</li>
+    <li onClick={()=>{setLan('繁體中文'); changeLanguage("ch")}}>繁體中文</li>
+    <li onClick={()=>{setLan('简体中文'); changeLanguage("simch")}}>简体中文</li>
+    <li onClick={()=>{setLan('English'); changeLanguage("eng")}}>English</li>
 </ul>
       </div>
 </li>
     <li className="me-2" id="">
-    <CopyrightOutlined />{money}
+    <CopyrightOutlined />{moneyData[moneyIndex].money}
       <div>
       <ul className="dropdown-menu">
-    <li onClick={()=>{setMoney('ALL')}}>ALL</li>
-    <li onClick={()=>{setMoney('AED')}}>AED</li>
-    <li onClick={()=>{setMoney('AFN')}}>AFN</li>
-    <li onClick={()=>{setMoney('AMD')}}>AMD</li>
-    <li onClick={()=>{setMoney('ANG')}}>ANG</li>
-    <li onClick={()=>{setMoney('AOA')}}>AOA</li>
-    <li onClick={()=>{setMoney('ARS')}}>ARS</li>
-    <li onClick={()=>{setMoney('AUD')}}>AUD</li>
-    <li onClick={()=>{setMoney('AWG')}}>AWG</li>
-    <li onClick={()=>{setMoney('AZN')}}>AZN</li>
-    <li onClick={()=>{setMoney('BAM')}}>BAM</li>
-    <li onClick={()=>{setMoney('BBD')}}>BBD</li>
-    <li onClick={()=>{setMoney('BDT')}}>BDT</li>
-    <li onClick={()=>{setMoney('BGN')}}>BGN</li>
-    <li onClick={()=>{setMoney('BHD')}}>BHD</li>
-    <li onClick={()=>{setMoney('BIF')}}>BIF</li>
-    <li onClick={()=>{setMoney('BMD')}}>BMD</li>
-    <li onClick={()=>{setMoney('BOB')}}>BOB</li>
-    <li onClick={()=>{setMoney('BRL')}}>BRL</li>
-    <li onClick={()=>{setMoney('BSD')}}>BSD</li>
-    <li onClick={()=>{setMoney('BTC')}}>BTC</li>
-    <li onClick={()=>{setMoney('BTN')}}>BTN</li>
-    <li onClick={()=>{setMoney('BWP')}}>BWP</li>
-    <li onClick={()=>{setMoney('BYN')}}>BYN</li>
-    <li onClick={()=>{setMoney('BYR')}}>BYR</li>
-    <li onClick={()=>{setMoney('BZD')}}>BZD</li>
-    <li onClick={()=>{setMoney('CAD')}}>CAD</li>
-    <li onClick={()=>{setMoney('CDF')}}>CDF</li>
-    <li onClick={()=>{setMoney('CHF')}}>CHF</li>
-    <li onClick={()=>{setMoney('CLF')}}>CLF</li>
-    <li onClick={()=>{setMoney('CLP')}}>CLP</li>
-    <li onClick={()=>{setMoney('CNY')}}>CNY</li>
-    <li onClick={()=>{setMoney('COP')}}>COP</li>
-    <li onClick={()=>{setMoney('CRC')}}>CRC</li>
-    <li onClick={()=>{setMoney('CUC')}}>CUC</li>
-    <li onClick={()=>{setMoney('CUP')}}>CUP</li>
-    <li onClick={()=>{setMoney('CVE')}}>CVE</li>
-    <li onClick={()=>{setMoney('CZK')}}>CZK</li>
-    <li onClick={()=>{setMoney('DJF')}}>DJF</li>
-    <li onClick={()=>{setMoney('DKK')}}>DKK</li>
-    <li onClick={()=>{setMoney('DOP')}}>DOP</li>
-    <li onClick={()=>{setMoney('DZD')}}>DZD</li>
-    <li onClick={()=>{setMoney('EGP')}}>EGP</li>
-    <li onClick={()=>{setMoney('ERN')}}>ERN</li>
-    <li onClick={()=>{setMoney('ETB')}}>ETB</li>
-    <li onClick={()=>{setMoney('EUR')}}>EUR</li>
-    <li onClick={()=>{setMoney('FJD')}}>FJD</li>
-    <li onClick={()=>{setMoney('FKP')}}>FKP</li>
-    <li onClick={()=>{setMoney('GBP')}}>GBP</li>
-    <li onClick={()=>{setMoney('GEL')}}>GEL</li>
-    <li onClick={()=>{setMoney('GGP')}}>GGP</li>
-    <li onClick={()=>{setMoney('GHS')}}>GHS</li>
-    <li onClick={()=>{setMoney('GIP')}}>GIP</li>
-    <li onClick={()=>{setMoney('GMD')}}>GMD</li>
-    <li onClick={()=>{setMoney('CNF')}}>CNF</li>
-    <li onClick={()=>{setMoney('GTQ')}}>GTQ</li>
-    <li onClick={()=>{setMoney('GYD')}}>GYD</li>
-    <li onClick={()=>{setMoney('HKD')}}>HKD</li>
-    <li onClick={()=>{setMoney('HNL')}}>HNL</li>
-    <li onClick={()=>{setMoney('HRK')}}>HRK</li>
-</ul>
+  <li onClick={() => {setMoney(0)}}>AED</li>
+  <li onClick={() => {setMoney(1)}}>AFN</li>
+  <li onClick={() => {setMoney(2)}}>AMD</li>
+  <li onClick={() => {setMoney(3)}}>ANG</li>
+  <li onClick={() => {setMoney(4)}}>AOA</li>
+  <li onClick={() => {setMoney(5)}}>ARS</li>
+  <li onClick={() => {setMoney(6)}}>AUD</li>
+  <li onClick={() => {setMoney(7)}}>AWG</li>
+  <li onClick={() => {setMoney(8)}}>AZN</li>
+  <li onClick={() => {setMoney(9)}}>BAM</li>
+  <li onClick={() => {setMoney(10)}}>BBD</li>
+  <li onClick={() => {setMoney(11)}}>BDT</li>
+  <li onClick={() => {setMoney(12)}}>BGN</li>
+  <li onClick={() => {setMoney(13)}}>BHD</li>
+  <li onClick={() => {setMoney(14)}}>BIF</li>
+  <li onClick={() => {setMoney(15)}}>BMD</li>
+  <li onClick={() => {setMoney(16)}}>BOB</li>
+  <li onClick={() => {setMoney(17)}}>BRL</li>
+  <li onClick={() => {setMoney(18)}}>BSD</li>
+  <li onClick={() => {setMoney(19)}}>BTC</li>
+  <li onClick={() => {setMoney(20)}}>BTN</li>
+  <li onClick={() => {setMoney(21)}}>BWP</li>
+  <li onClick={() => {setMoney(22)}}>BYN</li>
+  <li onClick={() => {setMoney(23)}}>BYR</li>
+  <li onClick={() => {setMoney(24)}}>BZD</li>
+  <li onClick={() => {setMoney(25)}}>CAD</li>
+  <li onClick={() => {setMoney(26)}}>CDF</li>
+  <li onClick={() => {setMoney(27)}}>CHF</li>
+  <li onClick={() => {setMoney(28)}}>CLF</li>
+  <li onClick={() => {setMoney(29)}}>CLP</li>
+  <li onClick={() => {setMoney(30)}}>CNY</li>
+  <li onClick={() => {setMoney(31)}}>COP</li>
+  <li onClick={() => {setMoney(32)}}>CRC</li>
+  <li onClick={() => {setMoney(33)}}>CUC</li>
+  <li onClick={() => {setMoney(34)}}>CUP</li>
+  <li onClick={() => {setMoney(35)}}>CVE</li>
+  <li onClick={() => {setMoney(36)}}>CZK</li>
+  <li onClick={() => {setMoney(37)}}>DJF</li>
+  <li onClick={() => {setMoney(38)}}>DKK</li>
+  <li onClick={() => {setMoney(39)}}>DOP</li>
+  <li onClick={() => {setMoney(40)}}>DZD</li>
+  <li onClick={() => {setMoney(41)}}>EGP</li>
+  <li onClick={() => {setMoney(42)}}>ERN</li>
+  <li onClick={() => {setMoney(43)}}>ETB</li>
+  <li onClick={() => {setMoney(44)}}>EUR</li>
+  <li onClick={() => {setMoney(45)}}>FJD</li>
+  <li onClick={() => {setMoney(46)}}>FKP</li>
+  <li onClick={() => {setMoney(47)}}>GBP</li>
+  <li onClick={() => {setMoney(48)}}>GEL</li>
+  <li onClick={() => {setMoney(49)}}>GGP</li>
+  <li onClick={() => {setMoney(50)}}>GHS</li>
+  <li onClick={() => {setMoney(51)}}>GIP</li>
+  <li onClick={() => {setMoney(52)}}>GMD</li>
+  <li onClick={() => {setMoney(53)}}>CNF</li>
+  <li onClick={() => {setMoney(54)}}>GTQ</li>
+  <li onClick={() => {setMoney(55)}}>GYD</li>
+  <li onClick={() => {setMoney(56)}}>HKD</li>
+  <li onClick={() => {setMoney(57)}}>HNL</li>
+  <li onClick={() => {setMoney(58)}}>HRK</li>
+  <li onClick={() => {setMoney(59)}}>HTG</li>
+  <li onClick={() => {setMoney(60)}}>HUF</li>
+</ ul>
+
+
+
       </div>
 </li>
     <li className="" id=""><Link
     className='link-item'
                     to="register/"
                     style={{ textDecoration: "none", color: "#fff" }}
-                  ><SolutionOutlined />註冊</Link></li>
+                  ><SolutionOutlined />{t("signUp")}</Link></li>
     <li className="" id=""><Link
     className='link-item'
     to={login? "profile/": "login/"}
                     style={{ textDecoration: "none", color: "#fff" }}
-                  ><LockOutlined />{login? "個人資料" : "登入"}</Link></li>
+                  ><LockOutlined />{login? personalInfo : Log}</Link></li>
 </ul>
 
 {/* <ul className='sidebar-left'>
@@ -160,22 +215,22 @@ close
 </ul> */}
 
 
-<ul className='main'>
+<ul className='main' >
 <li className="menu-button left" onClick={showSidebarLeft} id="">
-        <span className="material-symbols-outlined">
-            menu
+        <span className="material-symbols-outlined left">
+        menu
 </span>
 </li>
-<div className='upper'>
-    <ul>
+<div className='upper'onBlur={setInputClose}>
+    <ul >
     <li className="hideOnMobile one" id=""><Dropdown isOpen={dropdownOpenLan} toggle={toggleLan}>
       <DropdownToggle caret size="lg">
       <GlobalOutlined />{Lan}
       </DropdownToggle>
       <DropdownMenu style={{position:"relative", right:"150px"}}>
-        <DropdownItem onClick={()=>{setLan('繁體中文')}}>繁體中文</DropdownItem>
-        <DropdownItem onClick={()=>{setLan('普通話')}}>普通話</DropdownItem>
-        <DropdownItem onClick={()=>{setLan('English')}}>English</DropdownItem>
+        <DropdownItem onClick={()=>{setLan('繁體中文'); changeLanguage("ch")}}>繁體中文</DropdownItem>
+        <DropdownItem onClick={()=>{setLan('简体中文'); changeLanguage("simch")}}>简体中文</DropdownItem>
+        <DropdownItem onClick={()=>{setLan('English'); changeLanguage("eng")}}>English</DropdownItem>
       </DropdownMenu>
     </Dropdown></li>
     {/* <li className="hideOnMobile" id=""><div class="dropdown">
@@ -191,109 +246,113 @@ close
 
     <li className="hideOnMobile two" id=""><Dropdown isOpen={dropdownOpen} toggle={toggle}>
       <DropdownToggle caret size="lg">
-      <CopyrightOutlined />{money}
+      <CopyrightOutlined />{moneyData[moneyIndex].money}
       </DropdownToggle>
       <DropdownMenu>
-        <DropdownItem onClick={() => {setMoney("AED")}}>AED</DropdownItem>
-        <DropdownItem onClick={() => {setMoney("AFN")}}>AFN</DropdownItem>
-        <DropdownItem onClick={() => {setMoney("ALL")}}>ALL</DropdownItem>
-<DropdownItem onClick={() => {setMoney("AMD")}}>AMD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("ANG")}}>ANG</DropdownItem>
-<DropdownItem onClick={() => {setMoney("AOA")}}>AOA</DropdownItem>
-<DropdownItem onClick={() => {setMoney("ARS")}}>ARS</DropdownItem>
-<DropdownItem onClick={() => {setMoney("AUD")}}>AUD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("AWG")}}>AWG</DropdownItem>
-<DropdownItem onClick={() => {setMoney("AZN")}}>AZN</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BAM")}}>BAM</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BBD")}}>BBD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BDT")}}>BDT</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BGN")}}>BGN</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BHD")}}>BHD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BIF")}}>BIF</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BMD")}}>BMD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BOB")}}>BOB</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BRL")}}>BRL</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BSD")}}>BSD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BTC")}}>BTC</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BTN")}}>BTN</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BWP")}}>BWP</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BYN")}}>BYN</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BYR")}}>BYR</DropdownItem>
-<DropdownItem onClick={() => {setMoney("BZD")}}>BZD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CAD")}}>CAD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CDF")}}>CDF</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CHF")}}>CHF</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CLF")}}>CLF</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CLP")}}>CLP</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CNY")}}>CNY</DropdownItem>
-<DropdownItem onClick={() => {setMoney("COP")}}>COP</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CRC")}}>CRC</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CUC")}}>CUC</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CUP")}}>CUP</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CVE")}}>CVE</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CZK")}}>CZK</DropdownItem>
-<DropdownItem onClick={() => {setMoney("DJF")}}>DJF</DropdownItem>
-<DropdownItem onClick={() => {setMoney("DKK")}}>DKK</DropdownItem>
-<DropdownItem onClick={() => {setMoney("DOP")}}>DOP</DropdownItem>
-<DropdownItem onClick={() => {setMoney("DZD")}}>DZD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("EGP")}}>EGP</DropdownItem>
-<DropdownItem onClick={() => {setMoney("ERN")}}>ERN</DropdownItem>
-<DropdownItem onClick={() => {setMoney("ETB")}}>ETB</DropdownItem>
-<DropdownItem onClick={() => {setMoney("EUR")}}>EUR</DropdownItem>
-<DropdownItem onClick={() => {setMoney("FJD")}}>FJD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("FKP")}}>FKP</DropdownItem>
-<DropdownItem onClick={() => {setMoney("GBP")}}>GBP</DropdownItem>
-<DropdownItem onClick={() => {setMoney("GEL")}}>GEL</DropdownItem>
-<DropdownItem onClick={() => {setMoney("GGP")}}>GGP</DropdownItem>
-<DropdownItem onClick={() => {setMoney("GHS")}}>GHS</DropdownItem>
-<DropdownItem onClick={() => {setMoney("GIP")}}>GIP</DropdownItem>
-<DropdownItem onClick={() => {setMoney("GMD")}}>GMD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("CNF")}}>CNF</DropdownItem>
-<DropdownItem onClick={() => {setMoney("GTQ")}}>GTQ</DropdownItem>
-<DropdownItem onClick={() => {setMoney("GYD")}}>GYD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("HKD")}}>HKD</DropdownItem>
-<DropdownItem onClick={() => {setMoney("HNL")}}>HNL</DropdownItem>
-<DropdownItem onClick={() => {setMoney("HRK")}}>HRK</DropdownItem>
-<DropdownItem onClick={() => {setMoney("HTG")}}>HTG</DropdownItem>
-<DropdownItem onClick={() => {setMoney("HUF")}}>HUF</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(0)}}>AED</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(1)}}>AFN</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(2)}}>AMD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(3)}}>ANG</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(4)}}>AOA</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(5)}}>ARS</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(6)}}>AUD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(7)}}>AWG</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(8)}}>AZN</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(9)}}>BAM</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(10)}}>BBD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(11)}}>BDT</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(12)}}>BGN</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(13)}}>BHD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(14)}}>BIF</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(15)}}>BMD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(16)}}>BOB</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(17)}}>BRL</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(18)}}>BSD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(19)}}>BTC</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(20)}}>BTN</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(21)}}>BWP</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(22)}}>BYN</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(23)}}>BYR</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(24)}}>BZD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(25)}}>CAD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(26)}}>CDF</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(27)}}>CHF</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(28)}}>CLF</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(29)}}>CLP</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(30)}}>CNY</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(31)}}>COP</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(32)}}>CRC</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(33)}}>CUC</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(34)}}>CUP</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(35)}}>CVE</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(36)}}>CZK</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(37)}}>DJF</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(38)}}>DKK</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(39)}}>DOP</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(40)}}>DZD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(41)}}>EGP</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(42)}}>ERN</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(43)}}>ETB</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(44)}}>EUR</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(45)}}>FJD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(46)}}>FKP</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(47)}}>GBP</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(48)}}>GEL</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(49)}}>GGP</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(50)}}>GHS</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(51)}}>GIP</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(52)}}>GMD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(53)}}>CNF</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(54)}}>GTQ</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(55)}}>GYD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(56)}}>HKD</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(57)}}>HNL</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(58)}}>HRK</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(59)}}>HTG</DropdownItem>
+  <DropdownItem onClick={() => {setMoney(60)}}>HUF</DropdownItem>
+</DropdownMenu>
 
-        <DropdownItem></DropdownItem>
-        <DropdownItem></DropdownItem>
-        <DropdownItem></DropdownItem>
-        <DropdownItem></DropdownItem>
-        <DropdownItem></DropdownItem>
-        <DropdownItem></DropdownItem>
-        <DropdownItem></DropdownItem>
-        <DropdownItem></DropdownItem>
-      </DropdownMenu>
+
     </Dropdown></li> 
-    <li className="hideOnMobile" id="">
-      <FontAwesomeIcon icon={faMagnifyingGlass} />
+    <li className="hideOnMobile" id="" style={{cursor:"pointer"}}>
+      <FontAwesomeIcon onClick={setInput} icon={faMagnifyingGlass} />
       <input 
+      className='large-input'
       onChange={handleInputChange}
-      value={query}/><span>搜尋</span></li>
+      value={query} 
+      onBlur={setInputClose} 
+      />
+      <InputModal
+            handleInputChange={handleInputChange}
+            value={query} 
+            onBlur={setInputClose} 
+            showModal={showModal}
+            setShowModal={setShowModal}
+      />
+      
+      <span>{t("search")}</span></li>
     </ul>
-    <h1>眾樂樂單車店</h1>
+    <h1><Link to="/">{t("shopName")}</Link></h1>
 <ul>
     <li className="hideOnMobile" id=""><Link
     className='link-item'
                     to="/"
-                  ><HomeOutlined />主頁</Link></li>
+                  ><HomeOutlined />{t("home")}</Link></li>
     <li className="hideOnMobile" id=""><Link
     className='link-item'
                     to="checkout/"
                     style={{ textDecoration: "none", color: "#fff" }}
-                  ><ShoppingCartOutlined />購物車</Link></li>
+                  ><ShoppingCartOutlined />{t("cart")}</Link></li>
     <li className="hideOnMobile" id=""><Link
     className='link-item'
                     to="register/"
                     style={{ textDecoration: "none", color: "#fff" }}
-                  ><SolutionOutlined />註冊</Link></li>
+                  ><SolutionOutlined />{t("signUp")}</Link></li>
     <li className="hideOnMobile" id=""><Link
     className='link-item'
     to={login? "profile/": "login/"}
                     style={{ textDecoration: "none", color: "#fff" }}
-                  ><LockOutlined />{login? "個人資料" : "登入"}</Link></li>
+                  ><LockOutlined />{login? personalInfo : Log}</Link></li>
     </ul>
 </div>
 {/* <h1>Shop</h1>
@@ -310,8 +369,10 @@ close
     </div>
  */}    
  <li className="menu-button right" onClick={showSidebarRight} id="">
-        <span className="material-symbols-outlined">
-            menu
+ {/* <FontAwesomeIcon icon={faEllipsis} className="right"/> */}
+        <span className="material-symbols-outlined right">
+            
+            steppers
 </span>
 </li>
 </ul>

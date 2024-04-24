@@ -8,11 +8,12 @@ import { Table, Button } from 'reactstrap';
 import ShowContext from '../../index';
 import {createOrder} from "../../actions/orderAction"
 import { useNavigate, Link } from "react-router-dom";
+import { moneyData } from '../../data';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './checkout.css'
+import './order.css'
 const Order = () => {
     const cartitems = useSelector(state => state.cart.cartItems);
-    const {price, quantity, setQuantity, chooseRecord, setChooseRecord} = useContext(ShowContext);
+    const {moneyIndex, price, quantity, setQuantity, chooseRecord, setChooseRecord} = useContext(ShowContext);
 
     console.log(cartitems)
 useEffect(()=>{
@@ -23,30 +24,27 @@ console.log(chooseRecord)
 
     return (
         <body>
-            <div className="checkout-wrapper">
+            <div className="order-wrapper">
             <h4><Link to="/profile/" style={{textDecoration: "none", color: "black"}}>使用者</ Link>>Orders</h4>
                 <section>
                     <h1>購物記錄</h1>
-                    <Table style={{width:"100%"}}>
+                    <Table className="laptop" style={{width:"100%"}}>
                         <thead>
                             <tr>
-                                <th style={{width:"5%"}}>
+                                <th >
                                     <input type='checkbox'/>
                                 </th>
-                                <th style={{width:"10%"}}>
+                                <th >
                                     商品
                                 </th>
-                                <th style={{width:"55%"}}>
+                                <th >
                                     商品簡介
                                 </th>
-                                <th style={{width:"12%"}}>
+                                <th >
                                     數量
                                 </th>
-                                <th style={{width:"13%"}}>
+                                <th >
                                     價錢
-                                </th>
-                                <th style={{width:"5%"}}>
-                                    動作
                                 </th>
                             </tr>
                         </thead>
@@ -58,7 +56,43 @@ console.log(chooseRecord)
                                     <td><img src={subitem.image} className="c-image" alt='' /></td>
                                     <td >{subitem.name}</td>
                                     <td><p >{subitem.quantity}</p></td>
-                                    <td style={{display:"flex", textAlign: "right"}}><p >${subitem.price}</p></td>
+                                    <td style={{display:"flex", textAlign: "right"}}><p >{moneyData[moneyIndex].symbol} {Math.floor(subitem.price * moneyData[moneyIndex].currency)}</p></td>
+                                </tr>
+                                ))))}               
+                        </tbody>
+                    </Table>
+                    <Table className="mobile" style={{width:"100%"}}>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type='checkbox'/>
+                                </th>
+                                <th>
+                                    商品
+                                </th>
+                                <th>
+                                    商品簡介
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {chooseRecord.map((item, id ) => (
+                                item.record.map((subitem, id)=>(
+                                <tr key={id} className="list" style={{padding: "5px 0px"}}>
+                                    <th><input type='checkbox'/></th>
+                                    <td colspan="1">
+                                        <div className='img'>
+                                        <img src={subitem.image} className="c-image" alt='' />
+                                        </div>
+</td>
+                                    <td colspan="3">
+                                        <div>
+
+                                        {subitem.name}
+                                    <p >{subitem.quantity}</p>
+                                    <p >${subitem.price}</p>
+                                        </div>
+                                        </td>
                                 </tr>
                                 ))))}               
                         </tbody>

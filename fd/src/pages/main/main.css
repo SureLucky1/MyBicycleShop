@@ -334,7 +334,7 @@
   .body section.smallScreen {
     display: flex;
     width: 100%;
-    padding: 0px 25px;
+    padding: 0px 15px;
     margin-bottom: 100px;
   }
   .body section.smallScreen .info {
@@ -350,19 +350,23 @@
     flex-direction: row;
     justify-content: space-between;
   }
-  .body section.smallScreen .info div select {
+  .body section.smallScreen .info div button {
+    background-color: white;
     display: flex;
-    width: 23%;
-    font-size: 25px;
+    width: 115px;
+    font-size: 18px;
+    align-items: center;
+    justify-content: space-between;
   }
-  .body section.smallScreen .info div select option {
-    z-index: -1;
+  .body section.smallScreen .info div button svg {
+    width: 30px;
+    height: 30px;
   }
   .body section.smallScreen .info div .search {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 72%;
+    width: 63%;
     font-size: 38px;
     height: 50px;
     margin-top: 0px;
@@ -392,6 +396,7 @@
   .body section.smallScreen .info select {
     height: 50px;
     font-size: 30px;
+    margin-top: 10px;
   }
   .body section.smallScreen .productGroup {
     display: flex;
@@ -456,13 +461,53 @@
 }
 @media only screen and (max-width: 400px) {
   .body section.smallScreen .info select {
-    height: 50px;
-    font-size: 25px;
+    height: 40px;
+    font-size: 20px;
+  }
+  .body section.smallScreen .info div .search {
+    height: 40px;
+  }
+  .body section.smallScreen {
+    display: flex;
+    width: 100%;
+    padding: 0px 15px;
+    margin-bottom: 100px;
+  }
+  .body section.smallScreen .info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 25px 0px;
+  }
+  .body section.smallScreen .info div {
+    margin-top: 25px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .body section.smallScreen .info div button {
+    background-color: white;
+    display: flex;
+    margin-top: 0px;
+  }
+  .body section.smallScreen .info div button svg {
+    width: 25px;
+    height: 30px;
+  }
+  .body section.smallScreen .info div .search .type {
+    height: 30px;
+    font-size: 20px;
+    position: relative;
+    width: 100%;
+    left: 0;
+    border: none;
+    outline: none;
   }
   .body section.smallScreen .productGroup .product img {
     height: auto;
   }
   select option {
-    font-size: 20px;
+    font-size: 15px;
   }
 }/*# sourceMappingURL=main.css.map */

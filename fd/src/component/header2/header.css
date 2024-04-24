@@ -100,6 +100,7 @@
 .sidebar-left li {
   width: 100%;
   color: black;
+  margin: 3px 0px;
 }
 
 .sidebar-left a {
@@ -192,7 +193,7 @@
 
   .nav2 li .link-item {
     color: black;
-    font-size: 12.5px;
+    font-size: 15px;
 
   }
 }

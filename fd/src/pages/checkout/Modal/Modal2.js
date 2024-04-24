@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from '../../../component/payment/Redux/cartSlice copy';
 import { clearTotal } from '../../../component/payment/Redux/priceSlice copy';
 import "./Modal.css";
 import { MdClose } from 'react-icons/md';
-const Modal = ({ showModal, setShowModal }) => {
+import { moneyData } from '../../../data';
+import ShowContext from '../../..';
+const Modal = ({ total, showModal, setShowModal }) => {
+  const {moneyIndex} = useContext(ShowContext);
   const cartitems = useSelector(state => state.cart.cartItems);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [cardNumber, setCardNumber] = useState("");
@@ -19,7 +22,7 @@ const Modal = ({ showModal, setShowModal }) => {
         image: item.image,
         name: item.title,
         quantity: item.cartQuantity,
-        price: item.price,
+        price: item.price * moneyData[moneyIndex].currency,
         productId: item.id,
     }));
     const totalPrice = cartitems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
@@ -79,7 +82,7 @@ const Modal = ({ showModal, setShowModal }) => {
               <label className='card'>Card Numbers</label><br />
               <input type="text" id="lname" placeholder="e.g. XXXX-XXXX-XXXX-XXXX" onChange={e => setCardNumber(e.target.value)} />
 
-              <h2>Total Price: ${Total}</h2>
+              <h2>Total Price: {moneyData[moneyIndex].symbol}{Math.floor(total)}</h2>
             </form>
             <button className="btn btn-success" onClick={check}>
               Checkout

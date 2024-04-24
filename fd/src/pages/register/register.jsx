@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TimezoneSelect from 'react-timezone-select';
 import { Table, Button, Label , FormGroup, Input, Col, Form, Row  } from 'reactstrap';
 import './register.css'
+import { useTranslation, Trans } from 'react-i18next';
 const Register = () => {
   const [date, setDate] = useState("");
   const [contactNumber, setContactNumber] = useState("");
@@ -9,6 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
   const [secretKey, setSecretKey] = useState("");
+  const { t, i18n } = useTranslation();
     const [selectedTimezone, setSelectedTimezone] = useState(
         Intl.DateTimeFormat().resolvedOptions().timeZone
       );
@@ -48,7 +50,7 @@ const Register = () => {
   return (
     <div>
         <Form >
-        <h4>新用戶註冊</h4>
+        <h4>{t("newUser")}</h4>
     <Row>
       <Col md={6}>
         <FormGroup >
@@ -58,20 +60,20 @@ const Register = () => {
           <Input
             id="exampleEmail"
             name="email"
-            placeholder="電郵"
+            placeholder={t("email")}
             type="email"
             onChange={(e) => setEmail(e.target.value)} />
                     <Input
             id="examplePassword"
             name="password"
-            placeholder="密碼"
+            placeholder={t("PW")}
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
                     <Input
             id="examplePassword"
             name="password"
-            placeholder="確認密碼"
+            placeholder={t("confirmPW")}
             type="password"
           />
                     <Input
@@ -84,7 +86,7 @@ const Register = () => {
                     <Input
             id="examplePassword"
             name="password"
-            placeholder="聯絡號碼"
+            placeholder={t("customContact")}
             type="text"
             onChange={(e) => setContactNumber(e.target.value)}
           />
@@ -92,10 +94,10 @@ const Register = () => {
       </Col>
     </Row>
     <Button type="submit" onClick={handleSubmit} style={{backgroundColor: "rgb(170, 170, 170)", color: "white"}}>
-      新用戶註冊
+    {t("newUser")}
     </Button>
     <Button style={{backgroundColor: "white", color: "rgb(170, 170, 170)", textDecoration: "underline"}}>
-      返回登入頁面
+    {t("back")}
     </Button>
   </Form>
   </div>
