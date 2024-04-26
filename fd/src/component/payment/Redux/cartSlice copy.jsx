@@ -120,7 +120,7 @@ const cartSlice = createSlice({
     },
     decreaseCart(state, action) {
       const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload
+        (item) => item.id === action.payload.id
       );
 
       if (state.cartItems[itemIndex].cartQuantity > 1) {
@@ -136,7 +136,7 @@ const cartSlice = createSlice({
         });
       } else if (state.cartItems[itemIndex].cartQuantity === 1) {
         state.cartItems = state.cartItems.filter(
-          (item) => item.id !== action.payload
+          (item) => item.id !== action.payload.id
         );
 
         toast.error("Product removed from cart", {
@@ -148,7 +148,7 @@ const cartSlice = createSlice({
     },
     removeFromCart(state, action) {
       state.cartItems = state.cartItems.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload.id
       );
 
       toast.error("Product removed from cart", {

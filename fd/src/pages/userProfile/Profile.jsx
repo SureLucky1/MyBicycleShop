@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import UpdateProfile from "./UpdateProfile";
 import "./Profile.css";
 import ShowContext from "../../index";
+import { useTranslation, Trans } from 'react-i18next';
 import { useNavigate, useParams, useMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userAction";
 import { useAlert } from "react-alert";
 const ProfilePage = () => {
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
   const [mynumber, setMyNumber] = useState('');
@@ -154,11 +156,11 @@ const [date, setDate] = useState('')
     <div className="rootProfile">
       <div className="header-root">
         <Typography variant="h5" component="h1" className="headingProfile">
-          Hi, <strong>{myName}</strong> !
+        {t("hi")}, <strong>{myName}</strong> !
         </Typography>
 
         <Typography variant="body2" className="greeting">
-          Welcome back! Happy shopping!
+        {t("welcomeBack")}
         </Typography>
       </div>
 
@@ -168,7 +170,7 @@ const [date, setDate] = useState('')
           
             className="profileHeadingLeft"
           >
-            Profile Overview
+           {t("overview")}
           </h4>
           <div className="profileSection">
             <Avatar
@@ -178,15 +180,15 @@ const [date, setDate] = useState('')
             />
             <div className="leftDetails">
               <Typography className="profileText">
-                <h5 className="profileSubHeading">Name : <strong>{myName}</strong></h5>
+                <h5 className="profileSubHeading">{t("customerName")} : <strong>{myName}</strong></h5>
  
               </Typography>
               <Typography className="profileText">
-                <h5 className="profileSubHeading">Email : <strong>{email}</strong></h5>
+                <h5 className="profileSubHeading">{t("email")} : <strong>{email}</strong></h5>
           
               </Typography>
               <Typography className="profileText">
-                <h5 className="profileSubHeading">Member since : <strong>{date}</strong></h5>{" "}
+                <h5 className="profileSubHeading">{t("registerationDay")} : <strong>{date}</strong></h5>{" "}
 
               </Typography>
             </div>
@@ -194,7 +196,7 @@ const [date, setDate] = useState('')
 
           <div className="myOrder">
             <Typography variant="h4" component="h1" className="profileHeading">
-            Purchase Records
+            {t("shopRecord")}
             </Typography>
             <Link
             onClick={getInfo}
@@ -202,7 +204,7 @@ const [date, setDate] = useState('')
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Button  variant="contained" className="ordersButton">
-                Check Records
+              {t("check")}
               </Button>
             </Link>
           </div>
@@ -211,11 +213,10 @@ const [date, setDate] = useState('')
         <div className="rightConatiner">
           <div className="righHeadings">
             <Typography variant="h4" component="h1" className="profileHeading">
-              Personal Information
+            {t("personalInfo")}
             </Typography>
             <Typography className="profileText2">
-              Hey there ! Feel free to edit any of your details below so your
-              account is up to date.
+            {t("text2")}
             </Typography>
           </div>
           <div className="profileDetials">
@@ -226,17 +227,17 @@ const [date, setDate] = useState('')
                 className="profileHeading"
                 
               >
-                MY DETAILS
+                {t("details")}
               </Typography>
               <Typography className="profileText"></Typography>
-              <Typography className="profileText">USER EMAIL: <strong>{email}</strong></Typography>
-              <Typography className="profileText"> PHONE NUMBER: <strong>{mynumber}</strong></Typography>
-              <Typography className="profileText">GENDER: <strong>{myGender}</strong></Typography>
+              <Typography className="profileText">{t("email")}: <strong>{email}</strong></Typography>
+              <Typography className="profileText"> {t("Phone")}: <strong>{mynumber}</strong></Typography>
+              <Typography className="profileText">{t("gender")}: <strong>{myGender}</strong></Typography>
             </div>
 
             <Link to="/profile/update" style={{ textDecoration: "none" }}>
               <Button variant="contained" className="profileButton">
-                EDIT DETAILS
+              {t("edit")}
               </Button>
             </Link>
             <div className="detials">
@@ -246,16 +247,16 @@ const [date, setDate] = useState('')
                 className="profileHeading"
                 style={{ marginTop: "1.5rem" }}
               >
-                LOGIN DETAILS
+                {t("loginDetail")}
               </Typography>
-              <Typography className="profileSubHeading">EMAIL</Typography>
+              <Typography className="profileSubHeading">{t("email")}</Typography>
               <Typography className="profileText"><strong>{email}</strong></Typography>
 
               <Typography
                 className="profileSubHeading"
                 style={{ marginTop: "10px" }}
               >
-                PASSWORD
+                {t("PW")}
               </Typography>
               <Typography className="profileSubHeading">
                 *************
@@ -266,7 +267,7 @@ const [date, setDate] = useState('')
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Button variant="contained" className="profileButton">
-                UPDATE PASSWORD
+              {t("updatePW")}
               </Button>
             </Link>
 
@@ -276,13 +277,11 @@ const [date, setDate] = useState('')
                 component="h1"
                 className="profileHeading"
               >
-                Log out from all devices
+                {t("logoutAll")}
               </Typography>
 
               <p className="profileText3">
-                To access the Store website again, you need to
-                provide your credentials. This action will log you out from any
-                other web browsers you have used before.
+              {t("text")}
               </p>
             </div>
             <Button
@@ -292,7 +291,7 @@ const [date, setDate] = useState('')
               startIcon={<LogoutIcon />}
               onClick={handleLogout}
             >
-              Logout Account
+              {t("logout")}
             </Button>
           </div>
         </div>

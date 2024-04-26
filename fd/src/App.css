@@ -11,7 +11,7 @@
 
 .leftSidebar {
     height: 100vh;
-    /* display: none !important; */
+    display: none;
     position: fixed;
     z-index: 0;
     flex-direction: column;
@@ -22,7 +22,7 @@
 @media(max-width: 400px) {
     .leftSidebar {
         padding-top: 20px;
-        margin-top: 60px;
+        margin-top: 50px;
     }
 
     .leftSidebar h1 {

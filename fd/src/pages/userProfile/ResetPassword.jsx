@@ -11,10 +11,10 @@ import useStyles from "./LoginFromStyle";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link } from "react-router-dom";
-
+import { useTranslation } from 'react-i18next';
 
 function ResetPassword() {
-
+  const { t, i18n } = useTranslation();
 //   const match = useRouteMatch();
 // const history = useHistory();
 //   const dispatch = useDispatch();
@@ -111,12 +111,12 @@ console.log(useremail, token)
               <LockResetIcon />
             </Avatar>
             <Typography variant="h5" component="h1" className={classes.heading}>
-              Reset Password
+              {t("changePW")}
             </Typography>
 
             <TextField
               style={{ marginTop: "1rem" }}
-              label="Password"
+              label= {t("PW")}
               variant="outlined"
               fullWidth
               className={`${classes.passwordInput} ${classes.textField}`}
@@ -130,7 +130,7 @@ console.log(useremail, token)
               onChange={handlePasswordChange}
             />
             <TextField 
-              label="Confirm Password"
+              label= {t("newPW")}
               variant="outlined"
               fullWidth
               className={`${classes.passwordInput} ${classes.textField}`}
@@ -146,7 +146,7 @@ console.log(useremail, token)
               style={{ marginTop: "3.5rem" }}
               onClick={resetPassword}
             >
-              Confirm New Password
+              {t("newPW")}
             </Button>
             <Typography
               variant="body1"
@@ -154,7 +154,7 @@ console.log(useremail, token)
               style={{ marginTop: ".5rem" }}
             >
               <Link to="/profile/" className={classes.createAccount}>
-                Cancel
+                {t("cancel")}
               </Link>
             </Typography>
           </form>

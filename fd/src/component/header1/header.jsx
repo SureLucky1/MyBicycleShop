@@ -18,7 +18,7 @@ import {
   } from 'reactstrap';
 import { useDispatch } from 'react-redux';
 
-const UpperHeader = ({ handleInputChange, query, handleClick }) => {
+const UpperHeader = ({ handleInputChange, clickSearch, query, handleClick, handleSearch }) => {
   const { t, i18n } = useTranslation();
 const changeLanguage = (lang) => {
   i18n.changeLanguage(lang);
@@ -53,11 +53,36 @@ const dispatch = useDispatch()
       }else if(leftsidebardisplay == 'flex'){
         setLeftSideBarDisplay("none")
       }
+
+
         // const sidebarLeft = document.querySelector('.sidebar-left');
         // sidebarLeft.style.display = 'flex';
         // const sidebarRight = document.querySelector('.sidebar-right');
         // sidebarRight.style.display = 'none';
-    }
+    }      
+
+    const openInput = () =>{
+      if(window.innerWidth > 1000){
+        document.querySelector(".large-input").style.opacity = 1;
+        document.querySelector(".large-input").style.width= "200px";
+        //document.querySelector(".large-input").style.border= "none";
+        document.querySelector(".large-input").style.transition= "1.5s";
+        document.querySelector(".large-input").style.borderRadius= "0px";
+        document.querySelector(".large-input").style.textDecoration= "underline";
+      }
+      else if(window.innerWidth > 800){
+        document.querySelector(".large-input").style.opacity = 1;
+        document.querySelector(".large-input").style.width= "78.3px";
+        //document.querySelector(".large-input").style.border= "none";
+        document.querySelector(".large-input").style.transition= "1.5s";
+        document.querySelector(".large-input").style.borderRadius= "0px";
+        document.querySelector(".large-input").style.textDecoration= "underline";
+            }
+      }
+
+      useEffect(()=>{
+        openInput();
+      }, [window.innerWidth])
     // const hideSidebarLeft = () => {
     //     const sidebar = document.querySelector('.sidebar-left');
     //     sidebar.style.display = 'none';
@@ -221,7 +246,7 @@ close
         menu
 </span>
 </li>
-<div className='upper'onBlur={setInputClose}>
+<div className='upper' onBlur={setInputClose}>
     <ul >
     <li className="hideOnMobile one" id=""><Dropdown isOpen={dropdownOpenLan} toggle={toggleLan}>
       <DropdownToggle caret size="lg">
@@ -314,23 +339,28 @@ close
 
 
     </Dropdown></li> 
-    <li className="hideOnMobile" id="" style={{cursor:"pointer"}}>
+    <li className="hideOnMobile three" id="" onMouseEnter={openInput} style={{cursor:"pointer"}}>
       <FontAwesomeIcon onClick={setInput} icon={faMagnifyingGlass} />
       <input 
       className='large-input'
       onChange={handleInputChange}
+      onKeyUp={handleSearch}
       value={query} 
+      //onClick={openInput}
       onBlur={setInputClose} 
+      
       />
       <InputModal
             handleInputChange={handleInputChange}
             value={query} 
+            handleSearch={handleSearch}
             onBlur={setInputClose} 
             showModal={showModal}
             setShowModal={setShowModal}
+            clickSearch={clickSearch}
       />
       
-      <span>{t("search")}</span></li>
+      <span onClick={clickSearch}>{t("search")}</span></li>
     </ul>
     <h1><Link to="/">{t("shopName")}</Link></h1>
 <ul>

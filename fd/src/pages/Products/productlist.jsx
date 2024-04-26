@@ -10,7 +10,7 @@ import { addPrice } from '../../component/payment/Redux/priceSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ArrowRightOutlined, CopyrightOutlined, ArrowUpOutlined, ArrowDownOutlined, ShoppingCartOutlined, SolutionOutlined, HomeOutlined, LockOutlined } from '@ant-design/icons';
 import { faEnvelope, faMagnifyingGlass, faUpLong } from '@fortawesome/free-solid-svg-icons'
-const Productlist = ({ sortAscending, myinfo, result2, min, max, onChange, handleChange, result, query, handleInputChange, handleClick}) => {
+const Productlist = ({ clickSearch, handleSearch, sortAscending, myinfo, result2, min, max, onChange, handleChange, result, query, handleInputChange, handleClick}) => {
 
     const { t, i18n } = useTranslation();
     const changeLanguage = (lang) => {
@@ -54,9 +54,9 @@ const Productlist = ({ sortAscending, myinfo, result2, min, max, onChange, handl
                         <div className='left'>
             <h4><strong>{t("merchandise")}</strong></h4>
             <div className='search'>
-<input className="type" onChange={handleInputChange}
+<input className="type" onKeyUp={handleSearch} onChange={handleInputChange}
       value={query} placeholder={t("enter")}/>
-      <FontAwesomeIcon icon={faMagnifyingGlass} className='searchGlass'/>
+      <FontAwesomeIcon icon={faMagnifyingGlass} onClick={clickSearch} className='searchGlass'/>
 </div>
 <div className='item-hover'>
             <h5>{t("product")}</h5>
@@ -120,8 +120,9 @@ const Productlist = ({ sortAscending, myinfo, result2, min, max, onChange, handl
 </select>
 <div className='search'>
 <input className='type' onChange={handleInputChange}
+onKeyUp={handleSearch}
       value={query} placeholder={t("enter")}/>
-            <FontAwesomeIcon icon={faMagnifyingGlass} className='searchGlass'/>
+            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={clickSearch} className='searchGlass'/>
       </div>
 </div>
 </div>

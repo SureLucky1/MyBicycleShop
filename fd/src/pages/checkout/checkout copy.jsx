@@ -74,7 +74,7 @@ const Checkout = () => {
 
     const handleRemoveFromCart = (item) => {
         dispatch(removeFromCart(item));
-        dispatch(subtractPrice(item.price * item.cartQuantity));
+        dispatch(subtractPrice({productId: item.id}));
     };
     const handledecreaseCart = (item) => {
         dispatch(decreaseCart(item));
@@ -99,7 +99,7 @@ const useremail = localStorage.getItem('useremail');  // 讀取 useremail
                 <h4><Link
     className='link-item'
                     to="/"
-                    style={{ textDecoration: "none", color: "black" }}>{t("home")}</Link>>{t("cart")}</h4>
+                    style={{ textDecoration: "none", color: "black" }}>{t("home")}</Link>{">"}{t("cart")}</h4>
                 <div className='become-member'>
                     <h4>{t("become")}</h4>
                     <p>{t("here")} <Link
@@ -151,11 +151,11 @@ const useremail = localStorage.getItem('useremail');  // 讀取 useremail
                             ))
 }
                             <tr>
-                                <th scope="row" colspan="1.5">
+                                <th scope="row" colSpan="1.5">
                                 </th>
                                 <td>
                                 </td>
-                                <td colspan="3.5">
+                                <td colSpan="3.5">
                                     <Button onClick={handleSubmit}>{t("checkOut")}</Button>
                                     <span>{t("sum")}：{moneyData[moneyIndex].symbol} {Math.floor(sum)}</span>
                                 </td>
@@ -201,9 +201,9 @@ const useremail = localStorage.getItem('useremail');  // 讀取 useremail
                             ))
 }
                             <tr>
-                                <th scope="row" colspan="1">
+                                <th scope="row" colSpan="1">
                                 </th>
-                                <td colspan="3">
+                                <td colSpan="3">
                                     <Button onClick={handleSubmit}>{t("checkOut")}</Button>
                                     <span>{t("sum")}：${sum}</span>
                                 </td>

@@ -16,9 +16,11 @@ import useStyles from "./LoginFromStyle";
 import { Link } from "react-router-dom";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 
+import { useTranslation, Trans } from 'react-i18next';
 function UpdateProfile() {
   const history = useNavigate();
   // const alert = useAlert();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   // const { error, isUpdated, loading } = useSelector(
   //   (state) => state.profileData
@@ -165,10 +167,10 @@ function updateEmail(e) {
               <UpdateIcon />
             </Avatar>
             <Typography variant="h5" component="h1" className={classes.heading}>
-              Update Profile Deatils
+              {t("updatePD")}
             </Typography>
             <TextField
-              label="Name"
+              label={t("customerName")}
               variant="outlined"
               fullWidth
               className={`${classes.nameInput} ${classes.textField}`}
@@ -183,7 +185,7 @@ function updateEmail(e) {
             />
 
             <TextField
-              label="Email"
+              label={t("email")}
               variant="outlined"
               fullWidth
               className={`${classes.emailInput} ${classes.textField}`}
@@ -197,7 +199,7 @@ function updateEmail(e) {
               }
             />
             <TextField
-              label="gender"
+              label={t("gender")}
               variant="outlined"
               fullWidth
               className={`${classes.emailInput} ${classes.textField}`}
@@ -226,7 +228,7 @@ function updateEmail(e) {
                   component="span"
                   className={classes.uploadAvatarButton}
                 >
-                  <p className={classes.uploadAvatarText}>Upload Avatar</p>
+                  <p className={classes.uploadAvatarText}>{t("upload")}</p>
                 </Button>
               </label>
             </div>
@@ -238,7 +240,7 @@ function updateEmail(e) {
               style={{ marginTop: "3rem" }}
               onClick={updateEmail}
             >
-              Update Profile
+              {t("updateProfile")}
             </Button>
             <Typography
               variant="body1"
@@ -246,7 +248,7 @@ function updateEmail(e) {
               style={{ marginTop: ".5rem" }}
             >
               <Link to="/profile/" className={classes.createAccount}>
-                Cancel
+              {t("cancel")}
               </Link>
             </Typography>
           </form>

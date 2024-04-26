@@ -21,7 +21,6 @@ import ResetPassword from "./pages/userProfile/ResetPassword.jsx"
 import ShowContext from './index.js';
 import ProductPage from './pages/Products/product-page/productPage.jsx';
 import { allChProducts, allEngProducts, moneyData, allSimpleChProducts } from './data.jsx';
-
 import Checkout from './pages/checkout/checkout copy.jsx';
 import { addToCart, setCurrency2 } from './component/payment/Redux/cartSlice copy.jsx';
 import { addPrice, subtractPrice, clearTotal, setCurrency }  from './component/payment/Redux/priceSlice.jsx';
@@ -43,12 +42,7 @@ function App() {
   const [rightsidebarWidth, setRightSideBarWidth] = useState("0");
   const [leftsidebarWidth, setLeftSideBarWidth] = useState("0");
   //const [currency, setCurrency] = useState(0);
-  const handleAdd = ()=>{
-    
-  }
-  useEffect(()=>{
 
-  })
 //   useEffect(()=>{
 //     cartitems.map((item, i)=>{
 //           if(item[i].cartQuantity === 0){
@@ -69,10 +63,21 @@ function App() {
   const [sortedProducts, setSortedProducts] = useState(null);
   const dispatch = useDispatch()
   const [query, setQuery] = useState("");
+  const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
 
   const handleInputChange = (event) => {
-    setQuery(event.target.value);
+
+      setQuery(event.target.value);
+  
+  };
+  const handleSearch = (event) => {
+    if (event.keyCode === 13) {
+      setSearch(event.target.value);
+    }
+  };
+  const handleClickSearch = () => {
+      setSearch(document.querySelector('.large-input').value);
   };
 
   const handleSideClick = (e) =>{
@@ -106,9 +111,25 @@ function App() {
       setRightSideBarDisplay("none")
       setLeftSideBarDisplay("none")
       setRightSideBarWidth("0");
+             if(e.target.className !=="large-input"){
+         document.querySelector(".large-input").style.opacity = 0;
+         document.querySelector(".large-input").style.width= 0;
+       }
     }
     }
-
+    // const openInput = (e) =>{
+    //   // if(e.target.className !=="large-input"){
+    //   //   document.querySelector(".large-input").style.opacity = 0;
+    //   //   document.querySelector(".large-input").style.width= 0;
+    //   // }
+    //   if(e.target.className ==="large-input"){
+    //     document.querySelector(".large-input").style.opacity = 1;
+    //     document.querySelector(".large-input").style.width= "200px";
+    //     document.querySelector(".large-input").style.border= "none";
+    //     document.querySelector(".large-input").style.borderRadius= "0px";
+    //     document.querySelector(".large-input").style.textDecoration= "underline";
+    //   }
+    //         }
 const handleSideBar2 = (e) => {
   if (!e.target.classList.contains("leftSidebar2")) {
     const sidebar = document.querySelector('.leftSidebar');
@@ -218,22 +239,52 @@ setSelectedCategory(event.target.value);
         );
   
   }
-
-  const myinfo = info(result)
+const [outdoor, setOutdoor] = useState("戶外運動");
+const [electric, setElectric] = useState("電動可移動工具");
+const [manual, setManual] = useState("人力滑板車, 單車");
+const [accessories, setAccessories] = useState("配件類");
+const [pro, setPro] = useState("全部商品");
+const [proCa, setProCa] = useState("商品分類");
+  const myinfo = info(result);
   useEffect(() => {
     let updatedResult = [];
     if(Lan === "繁體中文"){
-      updatedResult = filteredData(allChProducts, selectedCategory, selectedPrice, query, sortedProducts);
+      setOutdoor("戶外運動");
+      setElectric("電動可移動工具");
+      setManual("人力滑板車, 單車");
+      setAccessories("配件類")
+      setPro("全部商品");
+      setProCa("商品分類");
+
+      updatedResult = filteredData(allChProducts, selectedCategory, selectedPrice, search, sortedProducts);
     } else if(Lan === "简体中文"){
-      updatedResult = filteredData(allSimpleChProducts, selectedCategory, selectedPrice, query, sortedProducts);
+         setOutdoor("户外运动");
+      setElectric("电动可移动工具");
+      setManual("人力滑板车, 单车");
+      setAccessories("配件类")
+      setPro("全部商品");
+      setProCa("商品分类");
+
+      updatedResult = filteredData(allSimpleChProducts, selectedCategory, selectedPrice, search, sortedProducts);
     } else if(Lan === "English"){
-      updatedResult = filteredData(allEngProducts, selectedCategory, selectedPrice, query, sortedProducts);
+             setOutdoor("Outdoor Sport");
+      setElectric("Electric Mobility");
+      setManual("Manual Bicycle");
+      setAccessories("Accessories");
+      setPro("All Products");
+      setProCa("Categories");
+
+      updatedResult = filteredData(allEngProducts, selectedCategory, selectedPrice, search, sortedProducts);
     }
     // 確保這裡的 setResult 不會引起依賴項的變化
     setResult(updatedResult);
-  }, [Lan, moneyIndex, allChProducts, allSimpleChProducts, allEngProducts, selectedCategory, selectedPrice, query, sortedProducts]);
+  }, [Lan, moneyIndex, allChProducts, allSimpleChProducts, allEngProducts, selectedCategory, selectedPrice, search, sortedProducts]);
   
+useEffect(()=>{
+setQuery("")
+    setSearch("");
 
+}, [allChProducts, allSimpleChProducts, allEngProducts, selectedCategory, selectedPrice, sortedProducts])
 
 
   // useEffect(()=>{
@@ -246,30 +297,30 @@ setSelectedCategory(event.target.value);
   //   setShow("none")
   // }
   return (
-    <ShowContext.Provider value={{Lan, setLan, setCurrency, moneyIndex, setMoney, rightsidebarWidth, setRightSideBarWidth, leftsidebardisplay, setLeftSideBarDisplay, rightsidebardisplay, setRightSideBarDisplay, Total, qty, setQty, index, login, setLogin, chooseRecord, setChooseRecord, name, setName, price, setPrice, quantity, setQuantity, sortedProducts, setSortedProducts, setSelectedPrice, show, setShow, query, setQuery, selectedCategory, setSelectedCategory}}>
+    <ShowContext.Provider value={{Lan, setLan, setCurrency, moneyIndex, setMoney, rightsidebarWidth, setRightSideBarWidth, leftsidebardisplay, setLeftSideBarDisplay, rightsidebardisplay, setRightSideBarDisplay, Total, qty, setQty, index, login, setLogin, chooseRecord, setChooseRecord, name, setName, price, setPrice, quantity, setQuantity, sortedProducts, setSortedProducts, setSelectedPrice, show, setShow, query, setQuery, selectedCategory, setSelectedCategory, setSearch}}>
       <div className="App" onClick={handleSideClick}>
         <div className='leftSidebar' 
         onBlur={handleSideBar2}
         >
-          <h1><strong>商品分類</strong></h1>
-          <h1>全部商品</h1>
+          <h1><strong>{proCa}</strong></h1>
+          <h1>{pro}</h1>
           <select onChange={handleClick} 
           className='leftSidebar2'
           >
-        <option value="All">戶外運動 Outdoor</option>
-        <option value="Electric Mobility">電動可移動工具 Electric Mobility</option>
-        <option value="Manual Bicycle">人力滑板車, 單車 Manual Bicycle</option>
-        <option value="Accessories">配件類 Accessories</option>
+        <option value="All">{outdoor}</option>
+        <option value="Electric Mobility">{electric}</option>
+        <option value="Manual Bicycle">{manual}</option>
+        <option value="Accessories">{accessories}</option>
       </select>
         </div>
-        <UpperHeader query={query} handleInputChange={handleInputChange}/>
+        <UpperHeader query={query} clickSearch={handleClickSearch} handleInputChange={handleInputChange} handleSearch={handleSearch}/>
         <LowerHeader />
         <Routes>
-        <Route path="/" element={<Main sortAscending={sortAscending} myinfo={myinfo}  handleClick={handleClick} query={query} handleInputChange={handleInputChange}/>} />
+        <Route path="/" element={<Main clickSearch={handleClickSearch} handleSearch={handleSearch} sortAscending={sortAscending} myinfo={myinfo}  handleClick={handleClick} query={query} handleInputChange={handleInputChange}/>} />
         <Route path="about-us/" element={<AboutUs />} />
         <Route path="privacy/" element={<Privacy />} />
       <Route path="legalization" element={<Legalization />} />
-       <Route path="product/" element={<Productlist sortAscending={sortAscending} myinfo={myinfo} query={query} handleInputChange={handleInputChange} handleClick={handleClick}/>} />
+       <Route path="product/" element={<Productlist clickSearch={handleClickSearch} handleSearch={handleSearch} sortAscending={sortAscending} myinfo={myinfo} query={query} handleInputChange={handleInputChange} handleClick={handleClick}/>} />
       <Route path="maintenance/" element={<Maintenance />} />
       <Route path="maintenanceEng/" element={<LegalizationEng />} />
       <Route path="checkout" element={<Checkout />} />

@@ -6,28 +6,40 @@ import {addToCart, decreaseCart, removeFromCart, clearCart } from '../../compone
 import { addPrice, subtractPrice, clearTotal } from '../../component/payment/Redux/priceSlice';
 import { Table, Button } from 'reactstrap';
 import ShowContext from '../../index';
+import { useTranslation} from 'react-i18next';
 import {createOrder} from "../../actions/orderAction"
 import { useNavigate, Link } from "react-router-dom";
-import { moneyData } from '../../data';
+import { allChProducts, allEngProducts, moneyData, allSimpleChProducts } from '../../data';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './order.css'
 const Order = () => {
+    const [itemTitle, setItemTitle] = useState();
     const cartitems = useSelector(state => state.cart.cartItems);
-    const {moneyIndex, price, quantity, setQuantity, chooseRecord, setChooseRecord} = useContext(ShowContext);
-
+    const {Lan, moneyIndex, price, quantity, setQuantity, chooseRecord, setChooseRecord} = useContext(ShowContext);
     console.log(cartitems)
 useEffect(()=>{
+    chooseRecord.forEach(item => {
+        item.record.forEach((subItem)=>{
+                    if(Lan === "繁體中文"){
+            setItemTitle(allChProducts.All[subItem.productId-1].title)
+          } else if(Lan === "简体中文"){
+            setItemTitle(allSimpleChProducts.All[subItem.productId-1].title)
+          } else if(Lan === "English"){
+            setItemTitle(allEngProducts.All[subItem.productId-1].title)
+          }
+        })
+})
     if(chooseRecord === null)
     setChooseRecord(cartitems);
-}, [chooseRecord])
+}, [chooseRecord, Lan])
 console.log(chooseRecord)
-
+const { t} = useTranslation();
     return (
         <body>
             <div className="order-wrapper">
-            <h4><Link to="/profile/" style={{textDecoration: "none", color: "black"}}>使用者</ Link>>Orders</h4>
+            <h4><Link to="/profile/" style={{textDecoration: "none", color: "black"}}>{t("user")}</ Link>{">"}{t("orders")}</h4>
                 <section>
-                    <h1>購物記錄</h1>
+                    <h1>{t("shopRecord")}</h1>
                     <Table className="laptop" style={{width:"100%"}}>
                         <thead>
                             <tr>
@@ -35,16 +47,16 @@ console.log(chooseRecord)
                                     <input type='checkbox'/>
                                 </th>
                                 <th >
-                                    商品
+                                {t("merchandise")}
                                 </th>
                                 <th >
-                                    商品簡介
+                                    {t("productIntro")}
                                 </th>
                                 <th >
-                                    數量
+                                {t("qty")}
                                 </th>
                                 <th >
-                                    價錢
+                                {t("price")}
                                 </th>
                             </tr>
                         </thead>
@@ -54,7 +66,7 @@ console.log(chooseRecord)
                                 <tr key={id} className="list" style={{padding: "50px 50px"}}>
                                     <th><input type='checkbox'/></th>
                                     <td><img src={subitem.image} className="c-image" alt='' /></td>
-                                    <td >{subitem.name}</td>
+                                    <td >{itemTitle}</td>
                                     <td><p >{subitem.quantity}</p></td>
                                     <td style={{display:"flex", textAlign: "right"}}><p >{moneyData[moneyIndex].symbol} {Math.floor(subitem.price * moneyData[moneyIndex].currency)}</p></td>
                                 </tr>
@@ -68,10 +80,10 @@ console.log(chooseRecord)
                                     <input type='checkbox'/>
                                 </th>
                                 <th>
-                                    商品
+                                {t("merchandise")}
                                 </th>
                                 <th>
-                                    商品簡介
+                                {t("productIntro")}
                                 </th>
                             </tr>
                         </thead>
@@ -88,7 +100,7 @@ console.log(chooseRecord)
                                     <td colspan="3">
                                         <div>
 
-                                        {subitem.name}
+                                        {itemTitle}
                                     <p >{subitem.quantity}</p>
                                     <p >${subitem.price}</p>
                                         </div>

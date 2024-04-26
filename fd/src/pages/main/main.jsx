@@ -11,7 +11,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { faEnvelope, faMagnifyingGlass, faUpLong, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { ArrowRightOutlined, CopyrightOutlined, ArrowUpOutlined, ArrowDownOutlined, ShoppingCartOutlined, SolutionOutlined, HomeOutlined, LockOutlined } from '@ant-design/icons';
 import './main.css'
-const Main = ({ sortAscending, myinfo, query, handleInputChange, handleClick}) => {
+const Main = ({ clickSearch, handleSearch, sortAscending, myinfo, query, handleInputChange, handleClick}) => {
     const dispatch = useDispatch()
     const { show, setShow, selectedCategory} = useContext(ShowContext);
 
@@ -56,9 +56,9 @@ const Main = ({ sortAscending, myinfo, query, handleInputChange, handleClick}) =
     <option value="Desc">{t("sortbyhigher")}</option>
     </select>
 <div className='search'>
-    <input className="type" onChange={handleInputChange}
+    <input className="type" onKeyUp={handleSearch} onChange={handleInputChange}
       value={query} placeholder={t("enter")}/>
-      <FontAwesomeIcon icon={faMagnifyingGlass} className='searchGlass'/>
+      <FontAwesomeIcon icon={faMagnifyingGlass} onClick={clickSearch} className='searchGlass'/>
 </div>
 </div>
 <div className='productGroup'>
@@ -90,9 +90,9 @@ const Main = ({ sortAscending, myinfo, query, handleInputChange, handleClick}) =
 
 
     <div className='search'>
-    <input className="type" onChange={handleInputChange}
+    <input className="type" onKeyUp={handleSearch} onChange={handleInputChange}
       value={query} placeholder={t("enter")}/>
-      <FontAwesomeIcon icon={faMagnifyingGlass} className='searchGlass'/>
+      <FontAwesomeIcon icon={faMagnifyingGlass} onClick={clickSearch} className='searchGlass'/>
       </div>
 </div>
 </div>

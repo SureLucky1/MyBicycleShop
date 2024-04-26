@@ -4,7 +4,7 @@ import "./header.css"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation, Trans } from 'react-i18next';
 const LowerHeader = () => {
-  const { t, i18n } = useTranslation();
+  const { t} = useTranslation();
   const {pathname} = useLocation()
   const {leftsidebardisplay, setLeftSideBarDisplay} = useContext(ShowContext);
   

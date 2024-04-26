@@ -49,7 +49,7 @@ setColor(e.target.value)
             title: result.All[index-1].title, 
             image: result.All[index-1].img1, 
             price: result.All[index-1].price}));
-        dispatch(addPrice(item.price));
+        dispatch(addPrice({productId: item.id}));
     };
 
     const handledecreaseCart = (item) => {
@@ -58,7 +58,7 @@ setColor(e.target.value)
             title: result.All[index-1].title, 
             image: result.All[index-1].img1, 
             price: result.All[index-1].price}));
-        dispatch(subtractPrice(item.price));
+        dispatch(subtractPrice({productId: item.id}));
     };
 
     const handlefirstbutton = () =>{
